@@ -8,10 +8,15 @@ export default function QuemSomos() {
   const horizontalRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: horizontalRef,
-    offset: ["start end", "end start"],
+    offset: ["start 0.8", "end 0.2"],
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-75%"]);
+  // Multi-phase scroll animation: pause -> scroll -> pause
+  const x = useTransform(
+    scrollYProgress, 
+    [0, 0.25, 0.75, 1], 
+    ["0%", "0%", "-75%", "-75%"]
+  );
 
   return (
     <div className="min-h-screen pt-20">

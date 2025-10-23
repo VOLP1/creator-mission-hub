@@ -6,15 +6,55 @@ import { Link } from "react-router-dom";
 
 export default function Home() {
   const surgirRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: surgirRef,
-    offset: ["start end", "end start"],
-  });
+  const [sectionState, setSectionState] = useState<'before' | 'sticky' | 'after'>('before');
+  const [wipeProgress, setWipeProgress] = useState(0);
+  const [showContent, setShowContent] = useState(false);
 
-  const wipeHeight = useTransform(scrollYProgress, [0.3, 0.7], ["0%", "100%"]);
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!surgirRef.current) return;
+
+      const rect = surgirRef.current.getBoundingClientRect();
+      const sectionTop = rect.top;
+      const sectionHeight = rect.height;
+      const windowHeight = window.innerHeight;
+
+      // Antes da seção chegar no topo
+      if (sectionTop > 0) {
+        setSectionState('before');
+        setWipeProgress(0);
+        setShowContent(false);
+      }
+      // Seção está grudada no topo (sticky)
+      else if (sectionTop <= 0 && sectionTop + sectionHeight > windowHeight) {
+        setSectionState('sticky');
+        
+        // Calcula o progresso do wipe (0 a 1) de forma mais suave
+        const scrolled = Math.abs(sectionTop);
+        const totalScroll = sectionHeight - windowHeight;
+        const progress = scrolled / totalScroll;
+        setWipeProgress(Math.min(Math.max(progress, 0), 1));
+
+        // Quando o progresso passar de 70%, mostra o conteúdo e NÃO esconde mais
+        if (progress > 0.7) {
+          setShowContent(true);
+        }
+      }
+      // Seção já passou - LIBERA para a próxima seção
+      else if (sectionTop + sectionHeight <= windowHeight) {
+        setSectionState('after');
+        setWipeProgress(1);
+        setShowContent(true); // Mantém o conteúdo visível
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Check initial state
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-x-hidden">
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden bg-[hsl(var(--alarm))]">
         {/* Video Background Placeholder */}
@@ -53,8 +93,9 @@ export default function Home() {
       </section>
 
       {/* O Problema - Lixo Digital */}
-      <section className="min-h-screen bg-[hsl(var(--alarm))] py-32 px-6">
-        <div className="container mx-auto">
+      <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-6 overflow-hidden" style={{ zIndex: 0 }}>
+        <ParallaxBackground imageSrc="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1920&q=80" />
+        <div className="container mx-auto relative z-10">
           <TensionSection
             title="Estamos viciados em Lixo Digital."
             description="O 'fast-food' mental. Conteúdo viciante e sem valor que gera ansiedade. Os algoritmos recompensam o choque, não a criatividade."
@@ -64,8 +105,9 @@ export default function Home() {
       </section>
 
       {/* O Problema - Lixo Físico */}
-      <section className="min-h-screen bg-[hsl(var(--alarm))] py-32 px-6">
-        <div className="container mx-auto">
+      <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-6 overflow-hidden" style={{ zIndex: 0 }}>
+        <ParallaxBackground imageSrc="https://images.unsplash.com/photo-1621451537084-482c73073a0f?w=1920&q=80" />
+        <div className="container mx-auto relative z-10">
           <TensionSection
             title="E apáticos ao Lixo Físico."
             description="A desconexão digital nos torna indiferentes ao mundo real. Nossas ruas e praças estão pagando o preço."
@@ -76,8 +118,9 @@ export default function Home() {
       </section>
 
       {/* O Problema - Criadores Exaustos */}
-      <section className="min-h-screen bg-[hsl(var(--alarm))] py-32 px-6">
-        <div className="container mx-auto">
+      <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-6 overflow-hidden" style={{ zIndex: 0 }}>
+        <ParallaxBackground imageSrc="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1920&q=80" />
+        <div className="container mx-auto relative z-10">
           <TensionSection
             title="Os bons criadores estão desistindo."
             description="O sistema força os bons a escolherem: fazer polêmica ou desaparecer."
@@ -87,46 +130,119 @@ export default function Home() {
       </section>
 
       {/* O Ponto de Virada - "Surgir" Animation */}
-      <section ref={surgirRef} className="relative h-[200vh]">
-        {/* Sticky Text */}
-        <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
-          <div className="absolute inset-0 bg-[hsl(var(--alarm))]" />
+      <div ref={surgirRef} style={{ height: '300vh', position: 'relative', backgroundColor: '#111111' }}>
+        {/* Fixed/Absolute Content */}
+        <div 
+          style={{
+            position: sectionState === 'before' ? 'relative' : (sectionState === 'sticky' ? 'fixed' : 'absolute'),
+            top: sectionState === 'sticky' ? 0 : 'auto',
+            bottom: sectionState === 'after' ? 0 : 'auto',
+            left: 0,
+            right: 0,
+            height: '100vh',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            overflow: 'hidden',
+            zIndex: 10,
+            transition: 'all 0.3s ease-out'
+          }}
+        >
+          {/* Fundo preto */}
+          <div style={{ 
+            position: 'absolute', 
+            inset: 0, 
+            backgroundColor: '#111111',
+            zIndex: 1
+          }} />
 
-          {/* Wipe-up Cream Background */}
-          <motion.div
-            style={{ height: wipeHeight }}
-            className="absolute bottom-0 left-0 right-0 bg-background"
+          {/* Wipe branco que sobe */}
+          <div
+            style={{ 
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: `${wipeProgress * 100}%`,
+              backgroundColor: '#FAF9F6',
+              zIndex: 2
+            }}
           />
 
-          {/* Fixed Text */}
-          <h1 className="relative z-20 text-hero text-primary px-6 text-center">
+          {/* Conteúdo da próxima seção que aparece pelas laterais e PERMANECE */}
+          {showContent && (
+            <div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                zIndex: 4,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '3rem',
+                pointerEvents: 'none',
+                gap: '2rem'
+              }}
+            >
+              {/* Texto que entra pela esquerda */}
+              <motion.h2
+                initial={{ opacity: 0, x: -100 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, ease: 'easeOut' }}
+                className="text-section-title text-foreground"
+                style={{ textAlign: 'center' }}
+              >
+                Nós somos o +Creator.
+              </motion.h2>
+
+              {/* Texto que entra pela direita */}
+              <motion.p
+                initial={{ opacity: 0, x: 100 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
+                className="text-xl md:text-2xl text-muted-foreground max-w-3xl"
+                style={{ textAlign: 'center' }}
+              >
+                Somos um grupo de jovens que se cansou de esperar e decidiu
+                construir o futuro.
+              </motion.p>
+
+              {/* Foto que entra de baixo */}
+              <motion.div
+                initial={{ opacity: 0, y: 100 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4, ease: 'easeOut' }}
+                className="relative w-full max-w-4xl h-[40vh] rounded-2xl overflow-hidden shadow-cinematic"
+              >
+                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80')] bg-cover bg-center" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+              </motion.div>
+            </div>
+          )}
+
+          {/* Texto "mas existe uma solução" que desaparece */}
+          <h1 
+            style={{ 
+              position: 'relative', 
+              zIndex: 20,
+              color: '#FF6600',
+              textAlign: 'center',
+              padding: '0 1.5rem',
+              transition: 'opacity 0.3s ease-out',
+              opacity: showContent ? 0 : 1
+            }} 
+            className="text-hero"
+          >
             ...mas existe uma solução!
           </h1>
         </div>
-      </section>
+      </div>
 
       {/* A Solução - Apresentação */}
       <section className="min-h-screen bg-background py-32 px-6">
         <div className="container mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-section-title text-foreground mb-8">
-              Nós somos o +Creator.
-            </h2>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-16">
-              Somos um grupo de jovens que se cansou de esperar e decidiu
-              construir o futuro. Nascemos da inconformidade.
-            </p>
-          </motion.div>
-
-          <div className="mt-20 relative h-[60vh] rounded-2xl overflow-hidden shadow-cinematic">
-            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80')] bg-cover bg-center" />
-            <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
-          </div>
+          {/* Conteúdo já apareceu na transição anterior, não precisa repetir */}
         </div>
       </section>
 
@@ -348,6 +464,32 @@ function DeepDiveCard({
           {buttonText}
         </Button>
       </Link>
+    </motion.div>
+  );
+}
+
+// ParallaxBackground - Componente simples de fundo parallax
+function ParallaxBackground({ imageSrc }: { imageSrc: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
+
+  return (
+    <motion.div
+      ref={ref}
+      style={{ y }}
+      className="absolute inset-0 w-full h-[120%] -top-[10%]"
+    >
+      <div 
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: `url(${imageSrc})` }}
+      />
+      <div className="absolute inset-0 bg-black/60" />
     </motion.div>
   );
 }
