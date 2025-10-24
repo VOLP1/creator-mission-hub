@@ -239,50 +239,108 @@ export default function Home() {
         </div>
       </div>
 
-      {/* A Solução - Apresentação */}
-      <section className="min-h-screen bg-background py-32 px-6">
-        <div className="container mx-auto text-center">
-          {/* Conteúdo já apareceu na transição anterior, não precisa repetir */}
-        </div>
-      </section>
+      {/* O Que Fazemos - Desktop: Bento Box | Mobile: Full Screen */}
+      
+      {/* MOBILE: Full-Screen Cards */}
+      <div className="block md:hidden">
+        <MissionCardFullScreen
+          icon={Megaphone}
+          title="Conscientizar"
+          description="Mostramos a realidade do lixo digital e físico com dados e histórias reais."
+          bgImage="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&q=80"
+          accentColor="hsl(var(--alarm))"
+        />
+        <MissionCardFullScreen
+          icon={Users}
+          title="Unir"
+          description="Conectamos criadores, ativistas e pessoas que querem mudança."
+          bgImage="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1200&q=80"
+          accentColor="hsl(var(--secondary))"
+        />
+        <MissionCardFullScreen
+          icon={Target}
+          title="Apoiar"
+          description="Endossamos e promovemos projetos que são soluções reais."
+          bgImage="https://images.unsplash.com/photo-1526666923127-b2970f64b422?w=1200&q=80"
+          accentColor="hsl(var(--primary))"
+        />
+      </div>
 
-      {/* O Que Fazemos */}
-      <section className="py-32 px-6 bg-background">
+      {/* DESKTOP: Bento Box Style */}
+      <section className="hidden md:block py-20 px-6 bg-background">
         <div className="container mx-auto">
-          <div className="grid md:grid-cols-3 gap-12">
-            {[
-              {
-                icon: Megaphone,
-                title: "Conscientizar",
-                description:
-                  "Mostramos a realidade do lixo digital e físico com dados e histórias reais.",
-              },
-              {
-                icon: Users,
-                title: "Unir",
-                description:
-                  "Conectamos criadores, ativistas e pessoas que querem mudança.",
-              },
-              {
-                icon: Target,
-                title: "Apoiar",
-                description:
-                  "Endossamos e promovemos projetos que são soluções reais.",
-              },
-            ].map((item, i) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: i * 0.2 }}
-                viewport={{ once: true }}
-                className="bg-card p-8 rounded-2xl shadow-cinematic hover:shadow-glow transition-all duration-300"
-              >
-                <item.icon className="w-12 h-12 text-primary mb-6" />
-                <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
-                <p className="text-muted-foreground">{item.description}</p>
-              </motion.div>
-            ))}
+          {/* Bento Grid */}
+          <div className="grid grid-cols-2 gap-6 max-w-6xl mx-auto" style={{ gridTemplateRows: 'auto auto' }}>
+            
+            {/* Card 1: CONSCIENTIZAR - Grande (ocupa 2 linhas na esquerda) */}
+            <motion.div
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="relative overflow-hidden rounded-3xl shadow-cinematic hover:shadow-glow transition-all duration-500 group cursor-pointer row-span-2"
+              style={{ minHeight: '600px' }}
+            >
+              {/* Background */}
+              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&q=80')] bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/30" />
+              
+              {/* Content */}
+              <div className="relative z-10 p-12 h-full flex flex-col justify-end">
+                <Megaphone className="w-16 h-16 text-primary mb-6" />
+                <h3 className="text-5xl font-bold text-background mb-4">Conscientizar</h3>
+                <p className="text-xl text-background/90 max-w-md">
+                  Mostramos a realidade do lixo digital e físico com dados e histórias reais.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Card 2: UNIR - Médio (topo direito) */}
+            <motion.div
+              initial={{ opacity: 0, x: 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="relative overflow-hidden rounded-3xl shadow-cinematic hover:shadow-glow transition-all duration-500 group cursor-pointer"
+              style={{ minHeight: '290px' }}
+            >
+              {/* Background */}
+              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1200&q=80')] bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--secondary))] via-[hsl(var(--secondary))]/80 to-[hsl(var(--secondary))]/40" />
+              
+              {/* Content */}
+              <div className="relative z-10 p-8 h-full flex flex-col justify-end">
+                <Users className="w-12 h-12 text-background mb-4" />
+                <h3 className="text-3xl font-bold text-background mb-2">Unir</h3>
+                <p className="text-lg text-background/90">
+                  Conectamos criadores, ativistas e pessoas que querem mudança.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Card 3: APOIAR - Médio (baixo direito) */}
+            <motion.div
+              initial={{ opacity: 0, x: 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              viewport={{ once: true }}
+              className="relative overflow-hidden rounded-3xl shadow-cinematic hover:shadow-glow transition-all duration-500 group cursor-pointer"
+              style={{ minHeight: '290px' }}
+            >
+              {/* Background */}
+              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1526666923127-b2970f64b422?w=1200&q=80')] bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--primary))] via-[hsl(var(--primary))]/80 to-[hsl(var(--primary))]/40" />
+              
+              {/* Content */}
+              <div className="relative z-10 p-8 h-full flex flex-col justify-end">
+                <Target className="w-12 h-12 text-background mb-4" />
+                <h3 className="text-3xl font-bold text-background mb-2">Apoiar</h3>
+                <p className="text-lg text-background/90">
+                  Endossamos e promovemos projetos que são soluções reais.
+                </p>
+              </div>
+            </motion.div>
+
           </div>
         </div>
       </section>
@@ -329,22 +387,110 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Links de Aprofundamento */}
-      <section className="py-32 px-6 bg-background">
-        <div className="container mx-auto">
-          <div className="grid md:grid-cols-2 gap-12">
-            <DeepDiveCard
-              title="Quer ver todos os dados?"
-              buttonText="Veja o Relatório Completo"
-              link="/alarme"
-            />
-            <DeepDiveCard
-              title="Quer conhecer nossa equipe?"
-              buttonText="Leia nosso Manifesto"
-              link="/quem-somos"
-            />
+      {/* Links de Aprofundamento - SPLIT SCREEN CINEMATOGRÁFICO */}
+      <section className="relative h-screen flex flex-col md:flex-row">
+        {/* LADO ESQUERDO - Quer ver todos os dados? */}
+        <Link 
+          to="/alarme" 
+          className="group relative flex-1 overflow-hidden transition-all duration-700 hover:flex-[1.5]"
+        >
+          {/* Background com Parallax */}
+          <div className="absolute inset-0">
+            <ParallaxBackground imageSrc="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1920&q=80" />
           </div>
-        </div>
+          
+          {/* Overlay escuro que clareia no hover */}
+          <div className="absolute inset-0 bg-black/70 group-hover:bg-black/40 transition-all duration-700" />
+          
+          {/* Overlay gradiente com cor de destaque */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--alarm))]/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700" />
+
+          {/* Conteúdo */}
+          <div className="relative z-10 h-full flex flex-col items-center justify-center px-8 md:px-16">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="text-center max-w-lg"
+            >
+              <h3 className="text-4xl md:text-5xl font-bold text-background mb-6 group-hover:scale-110 transition-transform duration-700">
+                Quer ver todos os dados?
+              </h3>
+              
+              {/* Descrição que aparece no hover */}
+              <p className="text-lg md:text-xl text-background/80 mb-8 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-700">
+                Explore o relatório completo com todos os números, estatísticas e impacto do lixo digital e físico.
+              </p>
+
+              {/* Botão */}
+              <Button
+                size="lg"
+                className="bg-[hsl(var(--alarm))] hover:bg-[hsl(var(--alarm))]/90 text-background text-xl px-12 py-6 shadow-glow opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
+              >
+                Veja o Relatório Completo
+              </Button>
+            </motion.div>
+
+            {/* Indicador de hover */}
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-background/60 group-hover:text-background transition-all duration-700">
+              <p className="text-sm uppercase tracking-wider">Clique para explorar</p>
+            </div>
+          </div>
+
+          {/* Linha divisória */}
+          <div className="absolute right-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-background/30 to-transparent" />
+        </Link>
+
+        {/* LADO DIREITO - Quer conhecer nossa equipe? */}
+        <Link 
+          to="/quem-somos" 
+          className="group relative flex-1 overflow-hidden transition-all duration-700 hover:flex-[1.5]"
+        >
+          {/* Background com Parallax */}
+          <div className="absolute inset-0">
+            <ParallaxBackground imageSrc="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1920&q=80" />
+          </div>
+          
+          {/* Overlay escuro que clareia no hover */}
+          <div className="absolute inset-0 bg-black/70 group-hover:bg-black/40 transition-all duration-700" />
+          
+          {/* Overlay gradiente com cor de destaque */}
+          <div className="absolute inset-0 bg-gradient-to-bl from-[hsl(var(--primary))]/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700" />
+
+          {/* Conteúdo */}
+          <div className="relative z-10 h-full flex flex-col items-center justify-center px-8 md:px-16">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="text-center max-w-lg"
+            >
+              <h3 className="text-4xl md:text-5xl font-bold text-background mb-6 group-hover:scale-110 transition-transform duration-700">
+                Quer conhecer nossa equipe?
+              </h3>
+              
+              {/* Descrição que aparece no hover */}
+              <p className="text-lg md:text-xl text-background/80 mb-8 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-700">
+                Conheça os criadores por trás do movimento e leia nosso manifesto sobre o futuro da criação de conteúdo.
+              </p>
+
+              {/* Botão */}
+              <Button
+                size="lg"
+                className="bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))]/90 text-primary-foreground text-xl px-12 py-6 shadow-glow opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
+              >
+                Leia nosso Manifesto
+              </Button>
+            </motion.div>
+
+            {/* Indicador de hover */}
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-background/60 group-hover:text-background transition-all duration-700">
+              <p className="text-sm uppercase tracking-wider">Clique para explorar</p>
+            </div>
+          </div>
+        </Link>
       </section>
     </div>
   );
@@ -491,5 +637,48 @@ function ParallaxBackground({ imageSrc }: { imageSrc: string }) {
       />
       <div className="absolute inset-0 bg-black/60" />
     </motion.div>
+  );
+}
+
+// MissionCardFullScreen - Componente para Mobile (Full Screen)
+function MissionCardFullScreen({
+  icon: Icon,
+  title,
+  description,
+  bgImage,
+  accentColor,
+}: {
+  icon: any;
+  title: string;
+  description: string;
+  bgImage: string;
+  accentColor: string;
+}) {
+  return (
+    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      {/* Background com Parallax */}
+      <ParallaxBackground imageSrc={bgImage} />
+      
+      {/* Overlay com cor de destaque */}
+      <div 
+        className="absolute inset-0" 
+        style={{ 
+          background: `linear-gradient(180deg, ${accentColor}00 0%, ${accentColor}99 100%)` 
+        }} 
+      />
+
+      {/* Conteúdo */}
+      <motion.div
+        initial={{ opacity: 0, y: 60 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true, amount: 0.5 }}
+        className="relative z-10 text-center px-8 max-w-lg"
+      >
+        <Icon className="w-20 h-20 text-background mx-auto mb-8" />
+        <h2 className="text-5xl font-bold text-background mb-6">{title}</h2>
+        <p className="text-2xl text-background/90">{description}</p>
+      </motion.div>
+    </section>
   );
 }
