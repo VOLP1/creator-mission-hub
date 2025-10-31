@@ -12,10 +12,6 @@ if (!connectionString) {
 
 const pool = new Pool({
   connectionString,
-  // Production-friendly SSL defaults (commonly required by managed/VPS Postgres)
-  ssl: {
-    rejectUnauthorized: false,
-  },
 })
 
 export default pool
