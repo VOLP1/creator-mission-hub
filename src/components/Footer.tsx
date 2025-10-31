@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Instagram, Youtube, Twitter, Linkedin } from "lucide-react";
+import { Instagram } from "lucide-react";
 
 export const Footer = () => {
   const handleNewsletterSubmit = (e: React.FormEvent) => {
@@ -16,19 +16,10 @@ export const Footer = () => {
           {/* Logo & Newsletter */}
           <div className="space-y-6">
             <h3 className="text-3xl font-bold font-serif">+Creator</h3>
-            <p className="text-sm opacity-80">
-              Jovens idealistas construindo um futuro com propósito.
-            </p>
+            <p className="text-sm opacity-80">Jovens idealistas construindo um futuro com propósito.</p>
             <form onSubmit={handleNewsletterSubmit} className="space-y-3">
-              <Input
-                type="email"
-                placeholder="Seu e-mail"
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
-              />
-              <Button
-                type="submit"
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
-              >
+              <Input type="email" placeholder="Seu e-mail" className="bg-white/10 border-white/20 text-white placeholder:text-white/50" />
+              <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
                 Inscrever-se
               </Button>
             </form>
@@ -39,36 +30,16 @@ export const Footer = () => {
             <h4 className="text-lg font-bold mb-4 font-serif">Navegação</h4>
             <ul className="space-y-3">
               <li>
-                <Link
-                  to="/"
-                  className="opacity-80 hover:opacity-100 hover:text-primary transition-all"
-                >
-                  Home
-                </Link>
+                <Link to="/" className="opacity-80 hover:opacity-100 hover:text-primary transition-all">Home</Link>
               </li>
               <li>
-                <Link
-                  to="/alarme"
-                  className="opacity-80 hover:opacity-100 hover:text-primary transition-all"
-                >
-                  O Problema
-                </Link>
+                <Link to="/alarme" className="opacity-80 hover:opacity-100 hover:text-primary transition-all">O Problema</Link>
               </li>
               <li>
-                <Link
-                  to="/quem-somos"
-                  className="opacity-80 hover:opacity-100 hover:text-primary transition-all"
-                >
-                  Quem Somos
-                </Link>
+                <Link to="/quem-somos" className="opacity-80 hover:opacity-100 hover:text-primary transition-all">Quem Somos</Link>
               </li>
               <li>
-                <Link
-                  to="/projetos"
-                  className="opacity-80 hover:opacity-100 hover:text-primary transition-all"
-                >
-                  Nossa Missão
-                </Link>
+                {/* Link para /projetos removido enquanto a área da Influ.IA não está pronta */}
               </li>
             </ul>
           </div>
@@ -78,36 +49,16 @@ export const Footer = () => {
             <h4 className="text-lg font-bold mb-4 font-serif">Legal</h4>
             <ul className="space-y-3">
               <li>
-                <a
-                  href="#"
-                  className="opacity-80 hover:opacity-100 hover:text-primary transition-all"
-                >
-                  Política de Privacidade
-                </a>
+                <a href="#" className="opacity-80 hover:opacity-100 hover:text-primary transition-all">Política de Privacidade</a>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="opacity-80 hover:opacity-100 hover:text-primary transition-all"
-                >
-                  Termos de Uso
-                </a>
+                <a href="#" className="opacity-80 hover:opacity-100 hover:text-primary transition-all">Termos de Uso</a>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="opacity-80 hover:opacity-100 hover:text-primary transition-all"
-                >
-                  Transparência
-                </a>
+                <a href="#" className="opacity-80 hover:opacity-100 hover:text-primary transition-all">Transparência</a>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="opacity-80 hover:opacity-100 hover:text-primary transition-all"
-                >
-                  Contato
-                </a>
+                <a href="#" className="opacity-80 hover:opacity-100 hover:text-primary transition-all">Contato</a>
               </li>
             </ul>
           </div>
@@ -117,49 +68,24 @@ export const Footer = () => {
             <h4 className="text-lg font-bold mb-4 font-serif">Social</h4>
             <div className="flex gap-4">
               <a
-                href="#"
+                href="https://www.instagram.com/maiscreator/"
+                target="_blank"
+                rel="noreferrer"
                 className="p-3 bg-white/10 rounded-full hover:bg-primary hover:scale-110 transition-all"
                 aria-label="Instagram"
               >
                 <Instagram className="w-5 h-5" />
               </a>
-              <a
-                href="#"
-                className="p-3 bg-white/10 rounded-full hover:bg-primary hover:scale-110 transition-all"
-                aria-label="YouTube"
-              >
-                <Youtube className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                className="p-3 bg-white/10 rounded-full hover:bg-primary hover:scale-110 transition-all"
-                aria-label="Twitter"
-              >
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                className="p-3 bg-white/10 rounded-full hover:bg-primary hover:scale-110 transition-all"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-5 h-5" />
-              </a>
             </div>
-            <p className="mt-6 text-sm opacity-60">
-              Siga nossa jornada nas redes sociais
-            </p>
+            <p className="mt-6 text-sm opacity-60">Siga no Instagram</p>
           </div>
         </div>
 
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-white/10">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm opacity-60">
-              © 2025 Movimento +Creator. Todos os direitos reservados.
-            </p>
-            <p className="text-sm opacity-60">
-              Feito com ❤️ por jovens inconformados
-            </p>
+            <p className="text-sm opacity-60">© 2025 Movimento +Creator. Todos os direitos reservados.</p>
+            <p className="text-sm opacity-60">Feito com ❤️ por jovens inconformados</p>
           </div>
         </div>
       </div>

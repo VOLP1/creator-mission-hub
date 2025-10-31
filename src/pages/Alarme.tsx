@@ -1,8 +1,12 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { TrendingDown, Brain, Heart, Trash2 } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from "@/components/ui/chart";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, BarChart, Bar } from "recharts";
+import { TrendingDown, Brain, Heart, Trash2, LinkIcon } from "lucide-react";
 import { Link } from "react-router-dom";
+import { problemMetrics, sourcesNote } from "@/data/problem-metrics";
 
 export default function Alarme() {
   return (
@@ -142,26 +146,134 @@ export default function Alarme() {
         </div>
       </section>
 
-      {/* Estatísticas */}
+      {/* Evidências (dinâmicas) */}
       <section className="py-32 px-6 bg-[hsl(var(--alarm))]">
-        <div className="container mx-auto">
-          <div className="grid md:grid-cols-3 gap-12">
-            <StatCard
-              icon={Brain}
-              value="40%"
-              label="Queda na Capacidade de Atenção"
-            />
-            <StatCard
-              icon={Heart}
-              value="65%"
-              label="Aumento em Ansiedade Digital"
-            />
-            <StatCard
-              icon={TrendingDown}
-              value="80%"
-              label="Criadores Relatam Exaustão"
-            />
-          </div>
+        <div className="container mx-auto max-w-6xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-background mb-6">O Problema, em dados</h2>
+          <p className="text-background/80 mb-8">{sourcesNote}</p>
+
+          <Tabs defaultValue="digital" className="w-full">
+            <TabsList>
+              <TabsTrigger value="digital">Digital</TabsTrigger>
+              <TabsTrigger value="fisico">Físico</TabsTrigger>
+            </TabsList>
+
+            {/* Digital */}
+            <TabsContent value="digital" className="mt-6">
+              <div className="grid md:grid-cols-4 gap-4">
+                {problemMetrics.digital.kpis.map((kpi) => (
+                  <KpiCard key={kpi.id} icon={Brain} value={kpi.value} unit={kpi.unit} label={kpi.label} sourceName={kpi.sourceName} sourceUrl={kpi.sourceUrl} year={kpi.year} />
+                ))}
+              </div>
+
+              <div className="mt-10 grid md:grid-cols-5 gap-8 items-start">
+                <div className="md:col-span-3">
+                  <h3 className="text-xl text-background font-semibold mb-3">Tempo diário em redes ao longo dos anos</h3>
+                  <ChartContainer
+                    config={{ minutes: { label: "Minutos/dia", color: "hsl(var(--primary))" } }}
+                    className="bg-background/10 rounded-2xl border border-background/20 p-4"
+                  >
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart data={problemMetrics.digital.timeOnSocial} margin={{ left: 12, right: 12, top: 8, bottom: 8 }}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="year" stroke="currentColor" tick={{ fill: "currentColor" }} />
+                        <YAxis stroke="currentColor" tick={{ fill: "currentColor" }} />
+                        <Line type="monotone" dataKey="value" name="minutes" stroke="var(--color-minutes)" strokeWidth={2} dot={false} />
+                        <ChartTooltip content={<ChartTooltipContent nameKey="minutes" labelKey="year" />} />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </ChartContainer>
+                    <div className="mt-2">
+                      <SourceInline name={problemMetrics.digital.kpis.find(k=>k.id==='avg-time')?.sourceName || ''} url={problemMetrics.digital.kpis.find(k=>k.id==='avg-time')?.sourceUrl || '#'} />
+                    </div>
+                </div>
+                <div className="md:col-span-2">
+                  <h3 className="text-xl text-background font-semibold mb-3">Volume de conteúdo por minuto (multi-plataforma)</h3>
+                  <div className="space-y-3 bg-background/10 rounded-2xl border border-background/20 p-4">
+                    {problemMetrics.digital.contentVolumePerMinute?.map((s) => (
+                      <div key={s.id} className="flex items-center justify-between">
+                        <div className="text-background/80">{s.label}</div>
+                        <div className="text-background font-bold tabular-nums">{Intl.NumberFormat().format(s.value)} <span className="text-sm font-normal text-background/80">{s.unit}</span></div>
+                      </div>
+                    ))}
+                      {problemMetrics.digital.contentVolumePerMinute?.[0] && (
+                        <SourceInline name={problemMetrics.digital.contentVolumePerMinute[0].sourceName} url={problemMetrics.digital.contentVolumePerMinute[0].sourceUrl} />
+                      )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Short-form Share & Video Length Trends */}
+              <div className="mt-10 grid md:grid-cols-2 gap-8 items-start">
+                <div>
+                  <h3 className="text-xl text-background font-semibold mb-3">Short-form tomou conta do watch time</h3>
+                  <ChartContainer
+                    config={{ share: { label: "Share curto (%)", color: "hsl(var(--primary))" } }}
+                    className="bg-background/10 rounded-2xl border border-background/20 p-4"
+                  >
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={problemMetrics.digital.shortFormShareByYear} margin={{ left: 12, right: 12, top: 8, bottom: 8 }}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="year" stroke="currentColor" tick={{ fill: "currentColor" }} />
+                        <YAxis stroke="currentColor" tick={{ fill: "currentColor" }} />
+                        <Bar dataKey="value" name="share" fill="var(--color-share)" radius={[4,4,0,0]} />
+                        <ChartTooltip content={<ChartTooltipContent nameKey="share" labelKey="year" />} />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </ChartContainer>
+                    <div className="mt-2">
+                      <SourceInline name={problemMetrics.digital.kpis.find(k=>k.id==='short-form-share')?.sourceName || ''} url={problemMetrics.digital.kpis.find(k=>k.id==='short-form-share')?.sourceUrl || '#'} />
+                    </div>
+                </div>
+                <div>
+                  <h3 className="text-xl text-background font-semibold mb-3">Vídeos estão ficando mais curtos</h3>
+                  <ChartContainer
+                    config={{ length: { label: "Duração média (min)", color: "hsl(var(--primary))" } }}
+                    className="bg-background/10 rounded-2xl border border-background/20 p-4"
+                  >
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart data={problemMetrics.digital.avgVideoLengthByYear} margin={{ left: 12, right: 12, top: 8, bottom: 8 }}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="year" stroke="currentColor" tick={{ fill: "currentColor" }} />
+                        <YAxis stroke="currentColor" tick={{ fill: "currentColor" }} />
+                        <Line type="monotone" dataKey="value" name="length" stroke="var(--color-length)" strokeWidth={2} dot={false} />
+                        <ChartTooltip content={<ChartTooltipContent nameKey="length" labelKey="year" />} />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </ChartContainer>
+                    <div className="mt-2">
+                      <SourceInline name={problemMetrics.digital.kpis.find(k=>k.id==='avg-video-length')?.sourceName || ''} url={problemMetrics.digital.kpis.find(k=>k.id==='avg-video-length')?.sourceUrl || '#'} />
+                    </div>
+                </div>
+              </div>
+
+              {/* Behavior KPIs */}
+              <div className="mt-10 grid md:grid-cols-4 gap-4">
+                {problemMetrics.digital.behavior?.avgSessionsPerDay && (
+                  <KpiCard icon={TrendingDown} value={problemMetrics.digital.behavior.avgSessionsPerDay.value} unit={problemMetrics.digital.behavior.avgSessionsPerDay.unit} label={problemMetrics.digital.behavior.avgSessionsPerDay.label} sourceName={problemMetrics.digital.behavior.avgSessionsPerDay.sourceName} sourceUrl={problemMetrics.digital.behavior.avgSessionsPerDay.sourceUrl} year={problemMetrics.digital.behavior.avgSessionsPerDay.year} />
+                )}
+                {problemMetrics.digital.behavior?.avgSessionDurationMin && (
+                  <KpiCard icon={TrendingDown} value={problemMetrics.digital.behavior.avgSessionDurationMin.value} unit={problemMetrics.digital.behavior.avgSessionDurationMin.unit} label={problemMetrics.digital.behavior.avgSessionDurationMin.label} sourceName={problemMetrics.digital.behavior.avgSessionDurationMin.sourceName} sourceUrl={problemMetrics.digital.behavior.avgSessionDurationMin.sourceUrl} year={problemMetrics.digital.behavior.avgSessionDurationMin.year} />
+                )}
+                {problemMetrics.digital.behavior?.swipeRatePerMin && (
+                  <KpiCard icon={TrendingDown} value={problemMetrics.digital.behavior.swipeRatePerMin.value} unit={problemMetrics.digital.behavior.swipeRatePerMin.unit} label={problemMetrics.digital.behavior.swipeRatePerMin.label} sourceName={problemMetrics.digital.behavior.swipeRatePerMin.sourceName} sourceUrl={problemMetrics.digital.behavior.swipeRatePerMin.sourceUrl} year={problemMetrics.digital.behavior.swipeRatePerMin.year} />
+                )}
+                {problemMetrics.digital.behavior?.retentionFirst3s && (
+                  <KpiCard icon={TrendingDown} value={problemMetrics.digital.behavior.retentionFirst3s.value} unit={problemMetrics.digital.behavior.retentionFirst3s.unit} label={problemMetrics.digital.behavior.retentionFirst3s.label} sourceName={problemMetrics.digital.behavior.retentionFirst3s.sourceName} sourceUrl={problemMetrics.digital.behavior.retentionFirst3s.sourceUrl} year={problemMetrics.digital.behavior.retentionFirst3s.year} />
+                )}
+              </div>
+            </TabsContent>
+
+            {/* Físico */}
+            <TabsContent value="fisico" className="mt-6">
+              <div className="grid md:grid-cols-4 gap-4">
+                {problemMetrics.physical.kpis.map((kpi) => (
+                  <KpiCard key={kpi.id} icon={Heart} value={kpi.value} unit={kpi.unit} label={kpi.label} sourceName={kpi.sourceName} sourceUrl={kpi.sourceUrl} year={kpi.year} />
+                ))}
+              </div>
+              {/* Pie/Breakdown could be added later using Recharts.PieChart */}
+            </TabsContent>
+          </Tabs>
         </div>
       </section>
 
@@ -281,4 +393,36 @@ function StatCard({
       <div className="text-xl text-background/80">{label}</div>
     </motion.div>
   );
+}
+
+function KpiCard({ icon: Icon, value, unit, label, sourceName, sourceUrl, year }: { icon: any; value: number; unit?: string; label: string; sourceName: string; sourceUrl: string; year?: number }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 12 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5 }}
+      className="bg-background/10 backdrop-blur-sm p-6 rounded-2xl border border-background/20"
+    >
+      <div className="flex items-center gap-3">
+        <Icon className="w-6 h-6 text-primary" />
+        <div className="text-background/80 text-sm">{label}{year ? ` · ${year}` : ''}</div>
+      </div>
+      <div className="mt-3 text-3xl font-bold text-background tabular-nums">
+        {Intl.NumberFormat('pt-BR').format(value)} {unit && <span className="text-sm font-normal text-background/80">{unit}</span>}
+      </div>
+      <SourceInline name={sourceName} url={sourceUrl} />
+    </motion.div>
+  )
+}
+
+function SourceInline({ name, url }: { name: string; url: string }) {
+  return (
+    <a href={url} target="_blank" rel="noreferrer" className="mt-2 inline-flex items-center gap-2 text-xs text-background/70 hover:text-background">
+      <LinkIcon className="w-3.5 h-3.5" />
+      <span>Fonte: {name}</span>
+    </a>
+  )
 }

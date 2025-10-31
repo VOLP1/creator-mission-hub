@@ -37,7 +37,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home onOpenManifesto={openManifesto} />} />
             <Route path="/alarme" element={<Alarme />} />
-            <Route path="/quem-somos" element={<QuemSomos />} />
+            <Route path="/quem-somos" element={<QuemSomos onOpenManifesto={openManifesto} />} />
             <Route path="/projetos" element={<Projetos />} />
             <Route path="/fundadores" element={<Fundadores />} />
             <Route

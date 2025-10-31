@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { useAuth } from '../contexts/AuthContext'
+import { Link } from 'react-router-dom'
 
 // UI (Shadcn/ui)
 import { Button } from '../components/ui/button'
@@ -93,8 +94,9 @@ export default function Assembleia() {
   }
 
   return (
-    <div className="container max-w-2xl py-12">
-      <h1 className="text-3xl font-bold">Assembleia de Fundação</h1>
+    <div className="container max-w-2xl pt-24 pb-12 px-6">
+      <WIPBanner />
+      <h1 className="text-3xl md:text-4xl font-bold mt-8">Assembleia de Fundação</h1>
       <p className="mt-2 text-muted-foreground">
         Este é o QG. Suas ideias definem nossas próximas missões.
       </p>
@@ -146,6 +148,23 @@ export default function Assembleia() {
           </Button>
         </form>
       </Form>
+    </div>
+  )
+}
+
+function WIPBanner() {
+  return (
+    <div className="rounded-2xl border bg-gradient-to-br from-primary/10 via-transparent to-primary/5 p-5 md:p-6">
+      <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-4">
+        <div className="text-xs md:text-sm uppercase tracking-widest text-primary font-semibold">Em desenvolvimento</div>
+        <div className="text-sm md:text-base text-muted-foreground">
+          Estamos abrindo espaço para as primeiras propostas de missão. Enquanto isso, conheça o Manifesto e participe da Ação de Lançamento.
+        </div>
+      </div>
+      <div className="mt-4 flex gap-3">
+        <Link to="/quem-somos#manifesto"><Button variant="outline">Ler o Manifesto</Button></Link>
+        <Link to="/projetos"><Button>Participar da Limpeza</Button></Link>
+      </div>
     </div>
   )
 }
