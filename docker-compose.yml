@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  # Este é o nome do nosso serviço de banco de dados
+  postgres-dev:
+    image: postgres:15
+    container_name: creator_mission_db
+    
+    # Credenciais que nosso .env local irá usar
+    environment:
+      POSTGRES_USER: 'admin'
+      POSTGRES_PASSWORD: 'password'
+      POSTGRES_DB: 'creator_mission'
+      
+    # Mapeia a porta do container (5432) para a sua máquina (localhost:5432)
+    ports:
+      - '5433:5432'
+      
+    # Garante que os dados não sejam perdidos se o container reiniciar
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+# Define o volume de dados
+volumes:
+  postgres-data:

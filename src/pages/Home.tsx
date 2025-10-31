@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown, Target, Users, Megaphone } from "lucide-react";
 import { Link } from "react-router-dom";
 
-export default function Home() {
+export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void }) {
   const surgirRef = useRef<HTMLDivElement>(null);
   const [sectionState, setSectionState] = useState<'before' | 'sticky' | 'after'>('before');
   const [wipeProgress, setWipeProgress] = useState(0);
@@ -375,14 +375,13 @@ export default function Home() {
               </div>
             </div>
 
-            <Link to="/projetos">
-              <Button
-                size="lg"
-                className="bg-primary hover:bg-primary/90 text-primary-foreground text-xl px-12 py-6 shadow-glow hover:scale-105 transition-all"
-              >
-                Participe da Missão
-              </Button>
-            </Link>
+            <Button
+              size="lg"
+              onClick={() => onOpenManifesto && onOpenManifesto()}
+              className="bg-primary hover:bg-primary/90 text-primary-foreground text-xl px-12 py-6 shadow-glow hover:scale-105 transition-all"
+            >
+              Assine o Manifesto
+            </Button>
           </motion.div>
         </div>
       </section>

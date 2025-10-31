@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
-export const Navbar = () => {
+export const Navbar = ({ onOpenManifesto }: { onOpenManifesto?: () => void }) => {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === "/";
@@ -74,13 +74,12 @@ export const Navbar = () => {
           </div>
 
           {/* CTA Button */}
-          <Link to="/projetos">
-            <Button
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-glow transition-all duration-300 hover:scale-105"
-            >
-              Apoie a Missão
-            </Button>
-          </Link>
+          <Button
+            onClick={() => onOpenManifesto && onOpenManifesto()}
+            className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-glow transition-all duration-300 hover:scale-105"
+          >
+            Assine o Manifesto
+          </Button>
         </div>
       </div>
     </motion.nav>
