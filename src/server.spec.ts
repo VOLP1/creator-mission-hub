@@ -1,4 +1,5 @@
 import { vi, describe, it, expect, beforeEach } from 'vitest'
+import jwt from 'jsonwebtoken'
 import request from 'supertest'
 
 // 1) Mock DB module BEFORE importing the server
@@ -47,7 +48,9 @@ describe('API /api/v1', () => {
     const res = await request(app).post('/api/v1/manifesto/sign').send(payload)
 
     expect(res.status).toBe(201)
-    expect(res.body).toEqual(newFounderData)
+    // Espera estrutura { user, token }
+    expect(res.body.user).toEqual(newFounderData)
+    expect(res.body).toHaveProperty('token')
     expect(mockedPool.query).toHaveBeenCalledWith(expect.any(String), ['Novo Fundador', 'novo@teste.com'])
   })
 
@@ -78,4 +81,68 @@ describe('API /api/v1', () => {
     expect(res.body).toHaveProperty('token')
     expect(mockedPool.query).toHaveBeenCalledTimes(2)
   })
+
+  // --- INÍCIO DO NOVO BLOCO DE TESTES ---
+  describe('POST /api/v1/missions', () => {
+    // Helper: Gera um token válido para os testes
+    const generateValidToken = (userId: number) => {
+      return jwt.sign({ id: userId }, process.env.JWT_SECRET || 'segredo-padrao', { expiresIn: '1m' })
+    }
+
+    it('Deve retornar 401 (Unauthorized) se nenhum token for enviado', async () => {
+      const res = await request(app)
+        .post('/api/v1/missions')
+        .send({
+          mission_type: 'DIGITAL',
+          suggestion: 'Uma sugestão de teste.',
+        })
+
+      // Deixa o auth.middleware real (que já testamos) fazer seu trabalho
+      expect(res.status).toBe(401)
+      expect(res.body.message).toContain('Nenhum token fornecido')
+    })
+
+    it('Deve retornar 400 (Bad Request) se os dados da missão forem inválidos (ex: falta suggestion)', async () => {
+      const token = generateValidToken(1) // Token válido para o Fundador ID 1
+
+      const res = await request(app)
+        .post('/api/v1/missions')
+        .set('Authorization', `Bearer ${token}`) // Envia o "crachá"
+        .send({
+          mission_type: 'DIGITAL',
+          // 'suggestion' está faltando
+        })
+
+      expect(res.status).toBe(400)
+      expect(res.body.message).toContain('inválidos')
+      expect(mockedPool.query).not.toHaveBeenCalled() // Não deve salvar no DB
+    })
+
+    it('Deve retornar 201 (Created) e salvar a missão se o token e os dados forem válidos', async () => {
+      const token = generateValidToken(123) // Token válido para o Fundador ID 123
+      const mockMissionData = {
+        mission_type: 'PHYSICAL',
+        suggestion: 'Limpar o parque local.',
+      }
+      const mockDbResponse = { id: 1, founder_id: 123, ...mockMissionData }
+
+      // Mock da query INSERT do banco
+      mockedPool.query.mockResolvedValueOnce({ rows: [mockDbResponse] } as any)
+
+      const res = await request(app)
+        .post('/api/v1/missions')
+        .set('Authorization', `Bearer ${token}`) // Envia o "crachá"
+        .send(mockMissionData)
+
+      expect(res.status).toBe(201)
+      expect(res.body).toEqual(mockDbResponse)
+
+      // Verifica se o INSERT foi chamado com o ID 123 (do token)
+      expect(mockedPool.query).toHaveBeenCalledWith(
+        expect.any(String), // O texto do INSERT
+        [123, 'PHYSICAL', 'Limpar o parque local.'],
+      )
+    })
+  })
+  // --- FIM DO NOVO BLOCO DE TESTES ---
 })

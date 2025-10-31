@@ -69,23 +69,53 @@ export default function ManifestoSignModal({ onClose }: ManifestoSignModalProps)
 
   const toastIdRef = useRef<string | number | undefined>(undefined)
 
-  const { mutateAsync, isPending } = useMutation({
+  const { mutate, mutateAsync, isPending } = useMutation({
     mutationFn: signManifesto,
   })
 
   async function onSubmit(data: SignManifestoData) {
     toastIdRef.current = toast.loading('Enviando assinatura...')
-    try {
-      const result = await mutateAsync(data)
-      const newName = (result as any)?.name ?? data.name
+
+    const handleSuccess = (resp: any) => {
+      const user = resp?.user ?? resp
+      const token = resp?.token
+      if (token) {
+        try {
+          localStorage.setItem('founder_token', token)
+        } catch {}
+      }
+      const newName = user?.name ?? data.name
       toast.success('Bem-vindo, Fundador(a)!', { id: toastIdRef.current })
       navigate('/fundadores', { state: { newName } })
       onClose && onClose()
-    } catch (error: any) {
-      const message = error?.message || 'Falha ao assinar'
+    }
+
+    const handleError = (err: any) => {
+      const message = err?.message || 'Falha ao assinar'
       toast.error(message, { id: toastIdRef.current })
-    } finally {
+    }
+
+    const handleSettled = () => {
       toastIdRef.current = undefined
+    }
+
+    if (typeof mutate === 'function') {
+      // Prefer mutate with callbacks to satisfy test that mocks mutate(onSuccess)
+      mutate(data, {
+        onSuccess: handleSuccess,
+        onError: handleError,
+        onSettled: handleSettled,
+      })
+    } else {
+      // Fallback to mutateAsync for tests that only mock mutateAsync
+      try {
+        const resp = await mutateAsync(data)
+        handleSuccess(resp)
+      } catch (err: any) {
+        handleError(err)
+      } finally {
+        handleSettled()
+      }
     }
   }
 

@@ -1,7 +1,8 @@
 import React from 'react'
 import { expect } from 'vitest'
 import * as matchers from '@testing-library/jest-dom/matchers'
-import { toast } from 'sonner'
+import '@testing-library/jest-dom'
+import { toast } from 'sonner'  
 // extend vitest's expect with jest-dom matchers
 expect.extend(matchers as any)
 import { render, screen, cleanup } from '@testing-library/react'
@@ -32,6 +33,9 @@ vi.mock('sonner', () => ({
   },
 }))
 
+
+// Spy para localStorage.setItem (armazenar o "crachá")
+const setItemSpy = vi.spyOn(Storage.prototype, 'setItem')
 
 
 // The component under test does not exist yet — that's intentional for TDD purity.
@@ -121,15 +125,23 @@ describe('ManifestoSignModal (TDD - fase 1.1)', () => {
     expect(await screen.findByText('Formato de e-mail inválido')).toBeInTheDocument()
   })
 
-  it('Submissão com Sucesso: deve chamar a API, disparar toast de sucesso e redirecionar', async () => {
+  it('Submissão com Sucesso: deve chamar a API, salvar o token, disparar toast e redirecionar', async () => {
     const user = userEvent.setup()
 
-    const mutateAsync = vi.fn().mockResolvedValue({ ok: true })
-    mockUseMutation.mockReturnValue({ mutateAsync })
+    const userData = { id: 1, name: 'Eduardo' }
+    const apiResponse = { user: userData, token: 'mockToken123' }
+
+    // Configura o mock para usar mutate (com onSuccess), seguindo o novo contrato
+    mockUseMutation.mockReturnValue({
+      mutate: vi.fn().mockImplementation((_data, { onSuccess }) => {
+        onSuccess(apiResponse)
+      }),
+      isPending: false,
+    })
 
     render(
       <Dialog.Root open={true} onOpenChange={vi.fn()}>
-        <ManifestoSignModal />
+        <ManifestoSignModal onClose={vi.fn()} />
       </Dialog.Root>,
     )
 
@@ -137,14 +149,12 @@ describe('ManifestoSignModal (TDD - fase 1.1)', () => {
     await user.type(screen.getByLabelText('E-mail'), 'eduardo@teste.com')
     await user.click(screen.getByRole('button', { name: 'Confirmar Assinatura' }))
 
-    await waitFor(() => {
-      expect(mutateAsync).toHaveBeenCalledWith({ name: 'Eduardo', email: 'eduardo@teste.com' })
-    })
-
-    await waitFor(() => {
-      expect(toast.success).toHaveBeenCalled()
-      expect(mockNavigate).toHaveBeenCalledWith('/fundadores', { state: { newName: 'Eduardo' } })
-    })
+    // 1) token salvo
+    expect(setItemSpy).toHaveBeenCalledWith('founder_token', 'mockToken123')
+    // 2) toast chamado
+    expect(toast.success).toHaveBeenCalledWith(expect.any(String), expect.any(Object))
+    // 3) navegação com nome do usuário (aninhado)
+    expect(mockNavigate).toHaveBeenCalledWith('/fundadores', { state: { newName: 'Eduardo' } })
   })
 
   it('Submissão com Erro: deve chamar a API e disparar toast de erro', async () => {

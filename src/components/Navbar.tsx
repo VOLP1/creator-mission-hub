@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
 import { motion } from "framer-motion";
 
 export const Navbar = ({ onOpenManifesto }: { onOpenManifesto?: () => void }) => {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === "/";
+  const { isAuthenticated, isLoading } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -73,13 +75,26 @@ export const Navbar = ({ onOpenManifesto }: { onOpenManifesto?: () => void }) =>
             ))}
           </div>
 
-          {/* CTA Button */}
-          <Button
-            onClick={() => onOpenManifesto && onOpenManifesto()}
-            className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-glow transition-all duration-300 hover:scale-105"
-          >
-            Assine o Manifesto
-          </Button>
+          {/* Auth-aware CTA */}
+          {isLoading ? null : (
+            isAuthenticated ? (
+              <Link
+                to="/assembleia"
+                className={`font-medium transition-colors duration-500 hover:text-primary ${
+                  scrolled ? "text-foreground" : "text-background"
+                }`}
+              >
+                Acessar QG
+              </Link>
+            ) : (
+              <Button
+                onClick={() => onOpenManifesto && onOpenManifesto()}
+                className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-glow transition-all duration-300 hover:scale-105"
+              >
+                Assine o Manifesto
+              </Button>
+            )
+          )}
         </div>
       </div>
     </motion.nav>

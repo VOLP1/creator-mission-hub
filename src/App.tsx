@@ -14,8 +14,10 @@ import QuemSomos from "./pages/QuemSomos";
 import Projetos from "./pages/Projetos";
 import NotFound from "./pages/NotFound";
 import Fundadores from "./pages/Fundadores";
+import Assembleia from "./pages/Assembleia";
 import { Dialog } from "@/components/ui/dialog";
 import ManifestoSignModal from "@/components/modals/ManifestoSignModal";
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +40,14 @@ const App = () => {
             <Route path="/quem-somos" element={<QuemSomos />} />
             <Route path="/projetos" element={<Projetos />} />
             <Route path="/fundadores" element={<Fundadores />} />
+            <Route
+              path="/assembleia"
+              element={
+                <ProtectedRoute>
+                  <Assembleia />
+                </ProtectedRoute>
+              }
+            />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
