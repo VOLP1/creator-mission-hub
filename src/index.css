@@ -8,6 +8,8 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
+    /* Prevent browsers from auto-inverting colors in dark mode */
+    color-scheme: light;
     /* +Creator Design System - Cinematographic & Immersive */
     --background: 36 100% 98.8%; /* Cream #FAF9F6 */
     --foreground: 0 0% 6.7%; /* Near Black #111111 */
