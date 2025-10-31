@@ -10,12 +10,5 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  server: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:4000',
-        changeOrigin: true,
-      },
-    },
-  },
+  // Note: proxy removed. Frontend will use absolute API URLs from import.meta.env.VITE_API_BASE_URL
 })

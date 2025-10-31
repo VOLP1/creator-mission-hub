@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { useMutation } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
+import { useAuth } from '@/contexts/AuthContext'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -39,6 +40,7 @@ interface ManifestoSignModalProps {
 
 export default function ManifestoSignModal({ onClose }: ManifestoSignModalProps) {
   const navigate = useNavigate()
+  const { login } = useAuth()
 
   const form = useForm<SignManifestoData>({
     resolver: zodResolver(signManifestoSchema),
@@ -49,7 +51,8 @@ export default function ManifestoSignModal({ onClose }: ManifestoSignModalProps)
   })
 
   async function signManifesto(data: SignManifestoData) {
-    const response = await fetch('/api/v1/manifesto/sign', {
+    const base = import.meta.env.VITE_API_BASE_URL || ''
+    const response = await fetch(`${base}/api/v1/manifesto/sign`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
@@ -81,7 +84,7 @@ export default function ManifestoSignModal({ onClose }: ManifestoSignModalProps)
       const token = resp?.token
       if (token) {
         try {
-          localStorage.setItem('founder_token', token)
+          login(token)
         } catch {}
       }
       const newName = user?.name ?? data.name

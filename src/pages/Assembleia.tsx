@@ -43,7 +43,9 @@ async function submitMission({ data, token }: { data: MissionFormValues; token: 
     throw new Error('Você não está autenticado.')
   }
 
-  const response = await fetch('/api/v1/missions', {
+  const base = import.meta.env.VITE_API_BASE_URL || ''
+
+  const response = await fetch(`${base}/api/v1/missions`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

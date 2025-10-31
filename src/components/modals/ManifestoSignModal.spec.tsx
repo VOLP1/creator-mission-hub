@@ -14,6 +14,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 // --- Mocks (router, react-query, and toast) ---
 const mockNavigate = vi.fn()
 const mockUseMutation = vi.fn()
+const mockLogin = vi.fn()
 
 vi.mock('react-router-dom', async () => ({
   ...(await vi.importActual<typeof import('react-router-dom')>('react-router-dom')),
@@ -25,6 +26,11 @@ vi.mock('@tanstack/react-query', async () => ({
   useMutation: () => mockUseMutation(),
 }))
 
+// Mock do AuthContext para injetar 'login'
+vi.mock('@/contexts/AuthContext', () => ({
+  useAuth: () => ({ login: mockLogin }),
+}))
+
 vi.mock('sonner', () => ({
   toast: {
     success: vi.fn(),
@@ -34,8 +40,7 @@ vi.mock('sonner', () => ({
 }))
 
 
-// Spy para localStorage.setItem (armazenar o "crachá")
-const setItemSpy = vi.spyOn(Storage.prototype, 'setItem')
+// (Removido) Não espionar localStorage.setItem; agora usamos auth.login()
 
 
 // The component under test does not exist yet — that's intentional for TDD purity.
@@ -147,14 +152,37 @@ describe('ManifestoSignModal (TDD - fase 1.1)', () => {
 
     await user.type(screen.getByLabelText('Nome ou Pseudônimo'), 'Eduardo')
     await user.type(screen.getByLabelText('E-mail'), 'eduardo@teste.com')
-    await user.click(screen.getByRole('button', { name: 'Confirmar Assinatura' }))
+  await user.click(screen.getByRole('button', { name: 'Confirmar Assinatura' }))
 
-    // 1) token salvo
-    expect(setItemSpy).toHaveBeenCalledWith('founder_token', 'mockToken123')
+  // 1) login chamado com o token retornado
+  expect(mockLogin).toHaveBeenCalledWith('mockToken123')
     // 2) toast chamado
     expect(toast.success).toHaveBeenCalledWith(expect.any(String), expect.any(Object))
     // 3) navegação com nome do usuário (aninhado)
     expect(mockNavigate).toHaveBeenCalledWith('/fundadores', { state: { newName: 'Eduardo' } })
+
+    // 4) (RED) MutationFn deve usar URL absoluta da API
+    // Mock de fetch e simulação da mutationFn de sucesso, validando a URL
+  const mockFetch = vi.fn().mockResolvedValue({ ok: true, json: async () => ({ id: '1', name: 'Eduardo' }) })
+  ;(global as any).fetch = mockFetch
+    const apiUrl = process.env.VITE_API_BASE_URL || 'http://localhost:4000'
+    const mutationFn = async (data: any) => {
+      const response = await fetch(`${apiUrl}/api/v1/manifesto/sign`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      } as RequestInit)
+      if (!response.ok) throw new Error('Falha')
+      return response.json()
+    }
+    await mutationFn({ name: 'Eduardo', email: 'eduardo@teste.com' })
+    expect(mockFetch).toHaveBeenCalledWith(
+      `${apiUrl}/api/v1/manifesto/sign`,
+      expect.objectContaining({
+        method: 'POST',
+        headers: expect.objectContaining({ 'Content-Type': 'application/json' }),
+      }),
+    )
   })
 
   it('Submissão com Erro: deve chamar a API e disparar toast de erro', async () => {

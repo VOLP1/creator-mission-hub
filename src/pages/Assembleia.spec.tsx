@@ -116,9 +116,10 @@ describe('Página Assembleia (src/pages/Assembleia.tsx)', () => {
 
     // Simula a chamada da mutationFn
     // (No teste real, isso estaria dentro do mock do 'useMutation')
+    const apiUrl = process.env.VITE_API_BASE_URL || 'http://localhost:4000'
     const mutationFn = async (data: any) => {
       const token = mockToken; // O token que o useAuth() "forneceu"
-      const response = await fetch('/api/v1/missions', {
+      const response = await fetch(`${apiUrl}/api/v1/missions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -135,7 +136,7 @@ describe('Página Assembleia (src/pages/Assembleia.tsx)', () => {
 
     // 5. Verifica se o 'fetch' foi chamado com o Header correto
     expect(mockFetch).toHaveBeenCalledWith(
-      '/api/v1/missions',
+      `${apiUrl}/api/v1/missions`,
       expect.objectContaining({
         headers: expect.objectContaining({
           'Authorization': 'Bearer meu-cracha-jwt-123',

@@ -10,7 +10,8 @@ type Fundador = {
 }
 
 async function fetchSignatures(): Promise<Fundador[]> {
-  const response = await fetch('/api/v1/manifesto/signatures')
+  const base = import.meta.env.VITE_API_BASE_URL || ''
+  const response = await fetch(`${base}/api/v1/manifesto/signatures`)
   if (!response.ok) {
     throw new Error('Falha ao buscar fundadores')
   }

@@ -48,7 +48,7 @@ describe('AuthContext (src/contexts/AuthContext.tsx)', () => {
     expect(screen.getByText('Deslogado')).toBeInTheDocument()
   })
 
-  it('Estado Inicial (Com Token Válido): deve decodificar o token e renderizar "Logado"', () => {
+  it('Estado Inicial (Com Token Válido): deve decodificar o token e renderizar "Logado"', async () => {
     const mockToken = 'token-valido'
     const mockUser = { id: 123, iat: 12345, exp: 99999 }
 
@@ -63,7 +63,10 @@ describe('AuthContext (src/contexts/AuthContext.tsx)', () => {
       </AuthProvider>,
     )
 
-    expect(screen.getByText('Logado como ID: 123')).toBeInTheDocument()
+    // Aguarda o efeito e a atualização de estado
+    expect(await screen.findByText('Logado como ID: 123')).toBeInTheDocument()
+    // E garante que o estado anterior sumiu
+    expect(screen.queryByText('Deslogado')).not.toBeInTheDocument()
   })
 
   it('Estado Inicial (Com Token Expirado): deve tentar decodificar, falhar e renderizar "Deslogado"', () => {

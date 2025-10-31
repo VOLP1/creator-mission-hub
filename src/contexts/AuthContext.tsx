@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
+import React, { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react'
 import { jwtDecode } from 'jwt-decode'
 
 // O payload que nosso backend coloca no JWT
@@ -11,9 +11,10 @@ export interface UserPayload {
 export interface AuthContextType {
   isAuthenticated: boolean
   user: UserPayload | null
+  token: string | null
   isLoading: boolean // Útil para "spinner"
-  // (No futuro, adicionaremos 'login' e 'logout' aqui)
-  token?: string | null // Expor o "crachá" quando disponível
+  login: (token: string) => void
+  logout: () => void
 }
 
 // O Contexto
@@ -25,40 +26,49 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true) // Começa carregando
 
+  // Função centralizada de login
+  const login = useCallback((newToken: string) => {
+    try {
+      const decoded = jwtDecode<UserPayload>(newToken)
+      localStorage.setItem('founder_token', newToken)
+      setUser(decoded)
+      setToken(newToken)
+    } catch (error) {
+      // Garante estado deslogado em falha
+      try { localStorage.removeItem('founder_token') } catch {}
+      setUser(null)
+      setToken(null)
+    }
+  }, [])
+
+  // Função centralizada de logout
+  const logout = useCallback(() => {
+    try { localStorage.removeItem('founder_token') } catch {}
+    setUser(null)
+    setToken(null)
+  }, [])
+
   useEffect(() => {
     // Esta lógica roda na montagem do App
     try {
       const storedToken = localStorage.getItem('founder_token')
-
-      // Teste 1: Se não há token, está deslogado
-      if (!storedToken) {
-        setIsLoading(false)
-        return
+      if (storedToken) {
+        login(storedToken)
       }
-
-      // Teste 2 e 3: Tenta decodificar
-      const decoded = jwtDecode<UserPayload>(storedToken)
-
-      // Teste 2 (Sucesso): Token válido
-      setUser(decoded)
-      setToken(storedToken)
     } catch (_error) {
-      // Teste 3 (Falha): Token inválido ou expirado
-      try {
-        localStorage.removeItem('founder_token') // Limpa o "crachá" ruim
-      } catch {}
-      setUser(null)
-      setToken(null)
+      logout()
     } finally {
       setIsLoading(false)
     }
-  }, []) // Array vazio = roda apenas 1 vez na montagem
+  }, [login, logout])
 
   const value: AuthContextType = {
     isAuthenticated: !!user, // Verdadeiro se 'user' não for nulo
     user,
-    isLoading,
     token,
+    isLoading,
+    login,
+    logout,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
