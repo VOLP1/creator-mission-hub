@@ -28,6 +28,7 @@ app.get('/api/v1/manifesto/signatures', async (_req, res) => {
     )
     return res.status(200).json((result as any).rows)
   } catch (err) {
+    console.error('ERRO AO BUSCAR ASSINATURAS:', err)
     return res.status(500).json({ message: 'Erro ao buscar assinaturas' })
   }
 })
@@ -52,6 +53,7 @@ app.post('/api/v1/manifesto/sign', async (req, res) => {
     const token = jwt.sign({ id: newFounder.id }, jwtSecret, { expiresIn: '30d' })
     return res.status(201).json({ user: newFounder, token })
   } catch (err: any) {
+    console.error('ERRO NO INSERT (OU JWT):', err)
     // 3) se for unique violation, faz login (200)
     if (err?.code === '23505') {
       try {
@@ -64,6 +66,7 @@ app.post('/api/v1/manifesto/sign', async (req, res) => {
         const token = jwt.sign({ id: existingUser.id }, jwtSecret, { expiresIn: '30d' })
         return res.status(200).json({ user: existingUser, token })
       } catch (findErr) {
+        console.error('ERRO NO SELECT PÓS-CONFLITO:', findErr)
         return res.status(500).json({ message: 'Erro interno ao buscar usuário existente.' })
       }
     }
@@ -95,7 +98,7 @@ app.post('/api/v1/missions', authMiddleware, async (req, res) => {
     const result = await pool.query(query, [founderId, mission_type, suggestion])
     return res.status(201).json((result as any).rows[0])
   } catch (err) {
-    console.error(err)
+    console.error('ERRO AO SALVAR MISSÃO:', err)
     return res.status(500).json({ message: 'Erro ao salvar a missão.' })
   }
 })
