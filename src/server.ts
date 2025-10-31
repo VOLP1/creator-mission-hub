@@ -2,8 +2,8 @@ import express from 'express'
 import cors from 'cors'
 import { z } from 'zod'
 import jwt from 'jsonwebtoken'
-import pool from './db'
-import authMiddleware from './auth.middleware'
+import pool from './db.js'
+import authMiddleware from './auth.middleware.js'
 
 const app = express()
 app.use(cors())
