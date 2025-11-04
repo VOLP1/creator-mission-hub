@@ -2,59 +2,61 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
 
 @layer base {
   :root {
     /* Prevent browsers from auto-inverting colors in dark mode */
     color-scheme: light;
-    /* +Creator Design System - Cinematographic & Immersive */
-    --background: 36 100% 98.8%; /* Cream #FAF9F6 */
-    --foreground: 0 0% 6.7%; /* Near Black #111111 */
+    /* +Creator Brand Palette */
+    /* Primary palette: #f7613a (accent), #eff0f1 (background), #2d2e30 (foreground/alarm), #384477 (accent-blue) */
+    /* Secondary palette: #65645E (secondary), #d3d9dc (muted/border), #c0ad96 (beige accent) */
+
+    --background: 210 7% 94%; /* #eff0f1 */
+    --foreground: 220 5% 18%; /* #2d2e30 */
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 6.7%;
+    --card-foreground: 220 5% 18%;
 
-    --popover: 36 100% 98.8%;
-    --popover-foreground: 0 0% 6.7%;
+    --popover: 210 7% 94%;
+    --popover-foreground: 220 5% 18%;
 
-    /* Action Orange */
-    --primary: 20 100% 50%; /* #FF6600 */
-    --primary-foreground: 36 100% 98.8%;
+    /* Brand Primary */
+    --primary: 12 92% 60%; /* #f7613a */
+    --primary-foreground: 210 7% 94%;
 
-    /* Impact Green-earth */
-    --secondary: 100 15% 31.8%; /* #4A5C43 */
-    --secondary-foreground: 36 100% 98.8%;
+  /* Brand Secondary (blue) */
+  --secondary: 229 36% 34%; /* #384477 */
+  --secondary-foreground: 210 7% 94%;
 
-    /* Alarm Black */
-    --alarm: 0 0% 6.7%; /* #111111 */
-    --alarm-foreground: 36 100% 98.8%;
+    /* Alarm/Dark surfaces */
+    --alarm: 220 5% 18%; /* #2d2e30 */
+    --alarm-foreground: 210 7% 94%; /* #eff0f1 */
 
-    --muted: 36 50% 90%;
-    --muted-foreground: 0 0% 40%;
+    --muted: 200 11% 85%; /* #d3d9dc */
+    --muted-foreground: 220 5% 35%;
 
-    --accent: 20 100% 50%;
-    --accent-foreground: 36 100% 98.8%;
+  --accent: 51 12% 38%; /* #65645E */
+    --accent-foreground: 210 7% 94%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 36 100% 98.8%;
+    --destructive-foreground: 210 7% 94%;
 
-    --border: 36 30% 85%;
-    --input: 36 30% 85%;
-    --ring: 20 100% 50%;
+    --border: 200 11% 85%;
+    --input: 200 11% 85%;
+    --ring: 12 92% 60%;
 
+    /* Extras */
+    --brand-beige: 33 25% 67%; /* #c0ad96 */
     --radius: 0.75rem;
 
     /* Gradients */
-    --gradient-hope: linear-gradient(135deg, hsl(20 100% 50%), hsl(100 15% 31.8%));
-    --gradient-tension: radial-gradient(circle at center, hsl(0 0% 6.7%), hsl(0 0% 0%));
-    --gradient-subtle: linear-gradient(180deg, hsl(36 100% 98.8%), hsl(0 0% 100%));
+  --gradient-hope: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+    --gradient-tension: radial-gradient(circle at center, hsl(var(--alarm)), hsl(0 0% 0%));
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(0 0% 100%));
 
     /* Shadows */
     --shadow-cinematic: 0 20px 60px -20px hsl(0 0% 0% / 0.5);
-    --shadow-glow: 0 0 40px hsl(20 100% 50% / 0.3);
+    --shadow-glow: 0 0 40px hsl(var(--primary) / 0.3);
 
     /* Animations */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -62,34 +64,34 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 0 0% 6.7%;
-    --foreground: 36 100% 98.8%;
-    --card: 0 0% 10%;
-    --card-foreground: 36 100% 98.8%;
-    --popover: 0 0% 6.7%;
-    --popover-foreground: 36 100% 98.8%;
-    --primary: 20 100% 50%;
-    --primary-foreground: 36 100% 98.8%;
-    --secondary: 100 15% 31.8%;
-    --secondary-foreground: 36 100% 98.8%;
-    --muted: 0 0% 20%;
-    --muted-foreground: 0 0% 60%;
-    --accent: 20 100% 50%;
-    --accent-foreground: 36 100% 98.8%;
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 20 100% 50%;
+    --background: 220 5% 18%;
+    --foreground: 210 7% 94%;
+    --card: 220 6% 22%;
+    --card-foreground: 210 7% 94%;
+    --popover: 220 5% 18%;
+    --popover-foreground: 210 7% 94%;
+    --primary: 12 92% 60%;
+    --primary-foreground: 210 7% 94%;
+  --secondary: 229 36% 34%;
+    --secondary-foreground: 210 7% 94%;
+    --muted: 220 6% 26%;
+    --muted-foreground: 210 7% 80%;
+  --accent: 51 12% 38%;
+    --accent-foreground: 210 7% 94%;
+    --border: 220 6% 26%;
+    --input: 220 6% 26%;
+    --ring: 12 92% 60%;
   }
 }
 
 @layer utilities {
   /* Cinematic Text Styles */
   .text-hero {
-    @apply font-serif text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight;
+    @apply font-sans text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight;
   }
   
   .text-section-title {
-    @apply font-serif text-4xl md:text-5xl lg:text-6xl font-bold;
+    @apply font-sans text-4xl md:text-5xl lg:text-6xl font-bold;
   }
 
   .text-glitch {
@@ -122,7 +124,7 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Montserrat', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Ubuntu, Cantarell, 'Noto Sans', sans-serif;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
@@ -139,7 +141,7 @@ All colors MUST be HSL.
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Montserrat', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Ubuntu, Cantarell, 'Noto Sans', sans-serif;
   }
 }
 

@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
-import { vi, describe, it, expect, beforeEach } from 'vitest';
+import { vi, describe, it, expect, beforeEach, beforeAll } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 
 // O componente que vamos testar
@@ -29,7 +29,6 @@ vi.mock('sonner', () => ({
 
 // Mock o 'fetch' global para que possamos espionar os Headers
 const mockFetch = vi.fn();
-// @ts-expect-error - sobrescrevendo fetch global para o teste
 global.fetch = mockFetch as any;
 
 // Helper para renderizar

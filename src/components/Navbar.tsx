@@ -51,7 +51,7 @@ export const Navbar = ({ onOpenManifesto }: { onOpenManifesto?: () => void }) =>
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
             <span
-              className={`text-2xl font-bold font-serif transition-colors duration-500 ${
+              className={`text-2xl font-bold font-poppins transition-colors duration-500 ${
                 scrolled ? "text-foreground" : "text-background"
               }`}
             >

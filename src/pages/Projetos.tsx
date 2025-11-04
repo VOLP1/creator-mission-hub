@@ -96,7 +96,7 @@ export default function Projetos() {
             className="max-w-4xl mx-auto text-center"
           >
             <h2 className="text-section-title text-secondary-foreground mb-8">
-              O Compromisso +Creator com a Sua Ação
+              O Compromisso <span className="font-poppins">+Creator</span> com a Sua Ação
             </h2>
 
             <div className="bg-secondary-foreground/10 backdrop-blur-sm rounded-3xl p-12 md:p-16 shadow-cinematic">
@@ -119,7 +119,7 @@ export default function Projetos() {
 
               <p className="text-xl text-secondary-foreground/90 max-w-2xl mx-auto">
                 Que VOCÊ doar ao crowdfunding da Influ.IA, NÓS (o Movimento
-                +Creator) vamos remover das ruas.
+                <span className="font-poppins"> +Creator</span>) vamos remover das ruas.
               </p>
             </div>
           </motion.div>
@@ -246,7 +246,7 @@ export default function Projetos() {
                 className="bg-background rounded-xl px-6 shadow-md"
               >
                 <AccordionTrigger className="text-lg font-semibold">
-                  Quem são vocês do +Creator?
+                  Quem são vocês do <span className="font-poppins">+Creator</span>?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground">
                   Somos um movimento de jovens idealistas que acreditam em um

@@ -60,6 +60,37 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## Tipografia do Movimento
+
+- Fonte padrão (global): Montserrat
+- Fonte da marca e qualquer texto que contenha "+Creator": Poppins
+
+Como usar:
+
+- Todo o site já usa Montserrat por padrão.
+- Para aplicar Poppins nos pontos de marca, use a classe utilitária `font-poppins` (ex.: `<span className="font-poppins">+Creator</span>`).
+- Navbar e Footer já foram ajustados. Em páginas com textos que mencionam "+Creator", os casos principais foram atualizados; no manifesto, a renderização já envolve automaticamente esse termo com Poppins.
+
+## Paleta de Cores
+
+Primárias:
+
+- Acento principal: `#f7613a`
+- Background claro: `#eff0f1`
+- Texto/escuro (também usado como “alarm”): `#2d2e30`
+- Secondary (azul): `#384477`
+
+Secundárias:
+
+- Accent/support (cinza quente): `#65645E`
+- Muted/border: `#d3d9dc`
+- Beige de apoio: `#c0ad96`
+
+Implementação técnica:
+
+- As variáveis CSS em `src/index.css` foram alinhadas a essas cores (ex.: `--primary`, `--secondary`, `--accent`, `--background`, `--foreground`, etc.) e o Tailwind consome via `hsl(var(--...))`.
+- Gradientes principais usam `--primary` → `--secondary`.
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/539ecc54-d48d-4065-939c-2c1690198a75) and click on Share -> Publish.

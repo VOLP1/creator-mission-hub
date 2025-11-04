@@ -48,7 +48,7 @@ export default function QuemSomos({ onOpenManifesto }: QuemSomosProps) {
       <section className="relative min-h-[80vh] flex items-center">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(60%_40%_at_50%_0%,hsl(var(--primary)/0.12),transparent_60%)]" />
         <div className="container mx-auto px-6 max-w-5xl">
-          <motion.p style={{ opacity: headerOpacity }} className="mb-3 text-sm uppercase tracking-widest text-primary">
+          <motion.p style={{ opacity: headerOpacity }} className="mb-3 text-sm uppercase tracking-widest text-primary font-poppins">
             O Manifesto +Creator
           </motion.p>
           <motion.h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
@@ -182,11 +182,24 @@ function ManifestoBlock({ title, paragraphs, accent, icon }: { title: string; pa
         <span>{title}</span>
       </motion.h2>
       <div className="mt-5 space-y-4">
-        {paragraphs.map((p, i) => (
-          <motion.p key={i} {...fadeUp as any} transition={{ duration: 0.6, delay: i * 0.05 }} className="text-base md:text-lg text-muted-foreground leading-relaxed">
-            {p}
-          </motion.p>
-        ))}
+        {paragraphs.map((p, i) => {
+          // Automatically render '+Creator' with Poppins font when present
+          const parts = p.split("+Creator");
+          return (
+            <motion.p key={i} {...(fadeUp as any)} transition={{ duration: 0.6, delay: i * 0.05 }} className="text-base md:text-lg text-muted-foreground leading-relaxed">
+              {parts.map((part, idx) => (
+                idx === 0 ? (
+                  part
+                ) : (
+                  <span key={`${i}-${idx}`}>
+                    <span className="font-poppins">+Creator</span>
+                    {part}
+                  </span>
+                )
+              ))}
+            </motion.p>
+          );
+        })}
       </div>
     </div>
   );

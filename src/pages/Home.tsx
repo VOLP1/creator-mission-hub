@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Target, Users, Megaphone } from "lucide-react";
 import { Link } from "react-router-dom";
+import { homeCopy } from "@/content/home";
 
 export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void }) {
   const surgirRef = useRef<HTMLDivElement>(null);
@@ -55,75 +56,41 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
 
   return (
     <div className="min-h-screen overflow-x-hidden">
-      {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden bg-[hsl(var(--alarm))]">
-        {/* Video Background Placeholder */}
-        <div className="absolute inset-0 bg-gradient-tension opacity-90" />
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80')] bg-cover bg-center opacity-20" />
+      {/* Hero Section - sticky with two stages (gancho -> diagnóstico) */}
+      <StickyHero />
 
-        {/* Content */}
-        <div className="relative z-10 text-center px-6 max-w-5xl">
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.3 }}
-            className="text-hero text-background mb-6"
-          >
-            O Herói é Você.
-          </motion.h1>
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.6 }}
-            className="text-2xl md:text-3xl text-background/90 font-light mb-12 max-w-3xl mx-auto"
-          >
-            O herói é quem decide sair da zona de conforto e agir. Nós somos o
-            mentor, mas VOCÊ é a força da mudança.
-          </motion.h2>
-
-          {/* Scroll Indicator */}
-          <motion.div
-            animate={{ y: [120, 130, 120] }}
-            transition={{ repeat: Infinity, duration: 3 }}
-            className="absolute bottom-12 left-1/2 -translate-x-1/2"
-          >
-            <ChevronDown className="w-8 h-8 text-background opacity-60" />
-          </motion.div>
-        </div>
-      </section>
-
-      {/* O Problema - Lixo Digital */}
+      {/* O Problema - A Mente Adoece */}
       <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-6 overflow-hidden" style={{ zIndex: 0 }}>
         <ParallaxBackground imageSrc="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1920&q=80" />
         <div className="container mx-auto relative z-10">
           <TensionSection
-            title="Estamos viciados em Lixo Digital."
-            description="O 'fast-food' mental. Conteúdo viciante e sem valor que gera ansiedade. Os algoritmos recompensam o choque, não a criatividade."
+            title={homeCopy.symptoms.mind.title}
+            description={homeCopy.symptoms.mind.description}
             imageSrc="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&q=80"
           />
         </div>
       </section>
 
-      {/* O Problema - Lixo Físico */}
+      {/* O Problema - O Mundo Real Sofre */}
       <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-6 overflow-hidden" style={{ zIndex: 0 }}>
         <ParallaxBackground imageSrc="https://images.unsplash.com/photo-1621451537084-482c73073a0f?w=1920&q=80" />
         <div className="container mx-auto relative z-10">
           <TensionSection
-            title="E apáticos ao Lixo Físico."
-            description="A desconexão digital nos torna indiferentes ao mundo real. Nossas ruas e praças estão pagando o preço."
+            title={homeCopy.symptoms.world.title}
+            description={homeCopy.symptoms.world.description}
             imageSrc="https://images.unsplash.com/photo-1621451537084-482c73073a0f?w=800&q=80"
             reverse
           />
         </div>
       </section>
 
-      {/* O Problema - Criadores Exaustos */}
+      {/* O Problema - A Criação Morre */}
       <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-6 overflow-hidden" style={{ zIndex: 0 }}>
         <ParallaxBackground imageSrc="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1920&q=80" />
         <div className="container mx-auto relative z-10">
           <TensionSection
-            title="Os bons criadores estão desistindo."
-            description="O sistema força os bons a escolherem: fazer polêmica ou desaparecer."
+            title={homeCopy.symptoms.creation.title}
+            description={homeCopy.symptoms.creation.description}
             imageSrc="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&q=80"
           />
         </div>
@@ -193,7 +160,7 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
                 className="text-section-title text-foreground"
                 style={{ textAlign: 'center' }}
               >
-                Nós somos o +Creator.
+                {homeCopy.turningPoint.weAre}
               </motion.h2>
 
               {/* Texto que entra pela direita */}
@@ -204,8 +171,7 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
                 className="text-xl md:text-2xl text-muted-foreground max-w-3xl"
                 style={{ textAlign: 'center' }}
               >
-                Somos um grupo de jovens que se cansou de esperar e decidiu
-                construir o futuro.
+                {homeCopy.turningPoint.paragraph}
               </motion.p>
 
               {/* Foto que entra de baixo */}
@@ -221,7 +187,7 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
             </div>
           )}
 
-          {/* Texto "mas existe uma solução" que desaparece */}
+          {/* Texto de transição que desaparece */}
           <h1 
             style={{ 
               position: 'relative', 
@@ -234,7 +200,7 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
             }} 
             className="text-hero"
           >
-            ...mas existe uma solução!
+            {homeCopy.turningPoint.transient}
           </h1>
         </div>
       </div>
@@ -496,6 +462,105 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
 }
 
 // Helper Components
+function StickyHero() {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const [sectionState, setSectionState] = useState<'before' | 'sticky' | 'after'>('before');
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (!heroRef.current) return;
+      const rect = heroRef.current.getBoundingClientRect();
+      const sectionTop = rect.top;
+      const sectionHeight = rect.height;
+      const windowHeight = window.innerHeight;
+
+      if (sectionTop > 0) {
+        setSectionState('before');
+        setProgress(0);
+      } else if (sectionTop <= 0 && sectionTop + sectionHeight > windowHeight) {
+        setSectionState('sticky');
+        const scrolled = Math.abs(sectionTop);
+        const totalScroll = Math.max(1, sectionHeight - windowHeight);
+        const p = Math.min(Math.max(scrolled / totalScroll, 0), 1);
+        setProgress(p);
+      } else {
+        setSectionState('after');
+        setProgress(1);
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // Opacity/translate curves to avoid overlap and blanks
+  // Faster, snappier transition for mobile: smaller overlap window
+  const s1Opacity = progress < 0.3 ? 1 : progress < 0.45 ? 1 - (progress - 0.3) / 0.15 : 0;
+  const s2Opacity = progress < 0.35 ? 0 : progress < 0.5 ? (progress - 0.35) / 0.15 : 1;
+  const s1Y = progress * -80; // stronger lift out
+  const s2Y = (1 - Math.min(1, Math.max(0, (progress - 0.35) / 0.15))) * 60; // faster rise in
+
+  return (
+  <div ref={heroRef} className="relative" style={{ height: '150vh' }}>
+      <div
+        className="relative"
+        style={{
+          position: sectionState === 'before' ? 'relative' : sectionState === 'sticky' ? 'fixed' : 'absolute',
+          top: sectionState === 'sticky' ? 0 : 'auto',
+          bottom: sectionState === 'after' ? 0 : 'auto',
+          left: 0,
+          right: 0,
+          height: '100vh',
+          overflow: 'hidden',
+          zIndex: 5,
+        }}
+      >
+        {/* Backgrounds */}
+        <div className="absolute inset-0 bg-gradient-tension opacity-90 z-0" />
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80')] bg-cover bg-center opacity-20 z-0" />
+        <div className="absolute inset-0 bg-black/35 z-0" />
+
+        {/* Stage 1: Gancho */}
+        <div
+          className="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
+          style={{ opacity: s1Opacity, transform: `translateY(${s1Y}px)` }}
+        >
+          <div className="text-center px-6 max-w-5xl">
+            <h1 className="text-hero text-background mb-6">{homeCopy.hero.h1B}</h1>
+            <h2 className="text-2xl md:text-3xl text-background/90 font-light mb-12 max-w-3xl mx-auto">
+              {homeCopy.hero.subtitle}
+            </h2>
+          </div>
+        </div>
+
+        {/* Stage 2: Diagnóstico */}
+        <div
+          className="absolute inset-0 flex items-center justify-center pointer-events-none z-20"
+          style={{ opacity: s2Opacity, transform: `translateY(${s2Y}px)` }}
+        >
+          <div className="text-center px-6 max-w-5xl">
+            <h2 className="text-4xl md:text-5xl font-bold text-background mb-6">{homeCopy.diagnosis.title}</h2>
+            <p className="text-xl md:text-2xl text-background/90 font-light max-w-3xl mx-auto">
+              {homeCopy.diagnosis.paragraph}
+            </p>
+          </div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <motion.div
+          animate={{ y: [120, 130, 120] }}
+          transition={{ repeat: Infinity, duration: 3 }}
+          className="absolute bottom-12 left-1/2 -translate-x-1/2"
+          aria-hidden
+        >
+          <ChevronDown className="w-8 h-8 text-background opacity-60" />
+        </motion.div>
+      </div>
+    </div>
+  );
+}
+
 function TensionSection({
   title,
   description,
