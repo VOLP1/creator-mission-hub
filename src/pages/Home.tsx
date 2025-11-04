@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown, Target, Users, Megaphone } from "lucide-react";
 import { Link } from "react-router-dom";
 
-export default function Home() {
+export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void }) {
   const surgirRef = useRef<HTMLDivElement>(null);
   const [sectionState, setSectionState] = useState<'before' | 'sticky' | 'after'>('before');
   const [wipeProgress, setWipeProgress] = useState(0);
@@ -375,14 +375,13 @@ export default function Home() {
               </div>
             </div>
 
-            <Link to="/projetos">
-              <Button
-                size="lg"
-                className="bg-primary hover:bg-primary/90 text-primary-foreground text-xl px-12 py-6 shadow-glow hover:scale-105 transition-all"
-              >
-                Participe da Missão
-              </Button>
-            </Link>
+            <Button
+              size="lg"
+              onClick={() => onOpenManifesto && onOpenManifesto()}
+              className="bg-primary hover:bg-primary/90 text-primary-foreground text-xl px-12 py-6 shadow-glow hover:scale-105 transition-all"
+            >
+              Assine o Manifesto
+            </Button>
           </motion.div>
         </div>
       </section>
@@ -442,7 +441,7 @@ export default function Home() {
           <div className="absolute right-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-background/30 to-transparent" />
         </Link>
 
-        {/* LADO DIREITO - Quer conhecer nossa equipe? */}
+        {/* LADO DIREITO - Quer conhecer nosso Manifesto? */}
         <Link 
           to="/quem-somos" 
           className="group relative flex-1 overflow-hidden transition-all duration-700 hover:flex-[1.5]"
@@ -468,12 +467,12 @@ export default function Home() {
               className="text-center max-w-lg"
             >
               <h3 className="text-4xl md:text-5xl font-bold text-background mb-6 group-hover:scale-110 transition-transform duration-700">
-                Quer conhecer nossa equipe?
+                Quer conhecer nosso Manifesto?
               </h3>
               
               {/* Descrição que aparece no hover */}
               <p className="text-lg md:text-xl text-background/80 mb-8 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-700">
-                Conheça os criadores por trás do movimento e leia nosso manifesto sobre o futuro da criação de conteúdo.
+                Entenda por que lutamos contra o lixo digital, os princípios que nos orientam e como queremos reconstruir a internet.
               </p>
 
               {/* Botão */}

@@ -1,12 +1,17 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
+import { Separator } from "@/components/ui/separator";
+import { Menu } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 import { motion } from "framer-motion";
 
-export const Navbar = () => {
+export const Navbar = ({ onOpenManifesto }: { onOpenManifesto?: () => void }) => {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === "/";
+  const { isAuthenticated, isLoading } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,7 +33,7 @@ export const Navbar = () => {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "O Problema", path: "/alarme" },
-    { name: "Quem Somos", path: "/quem-somos" },
+    { name: "Manifesto", path: "/quem-somos" },
   ];
 
   return (
@@ -54,7 +59,7 @@ export const Navbar = () => {
             </span>
           </Link>
 
-          {/* Center Links */}
+          {/* Center Links (desktop) */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <Link
@@ -73,14 +78,72 @@ export const Navbar = () => {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <Link to="/projetos">
-            <Button
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-glow transition-all duration-300 hover:scale-105"
-            >
-              Apoie a Missão
-            </Button>
-          </Link>
+          {/* Right area: desktop CTA vs mobile menu */}
+          <div className="flex items-center">
+            {/* Desktop: keep CTA */}
+            <div className="hidden md:block">
+              {isLoading ? null : (
+                isAuthenticated ? (
+                  <Link
+                    to="/assembleia"
+                    className={`font-medium transition-colors duration-500 hover:text-primary ${
+                      scrolled ? "text-foreground" : "text-background"
+                    }`}
+                  >
+                    Acessar QG
+                  </Link>
+                ) : (
+                  <Button
+                    onClick={() => onOpenManifesto && onOpenManifesto()}
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-glow transition-all duration-300 hover:scale-105"
+                  >
+                    Assine o Manifesto
+                  </Button>
+                )
+              )}
+            </div>
+
+            {/* Mobile: menu */}
+            <div className="md:hidden">
+              <Sheet>
+                <SheetTrigger asChild>
+                  <button
+                    aria-label="Abrir menu"
+                    className={`inline-flex items-center justify-center rounded-md p-2 transition-colors ${
+                      scrolled ? "text-foreground hover:bg-muted" : "text-background hover:bg-white/10"
+                    }`}
+                  >
+                    <Menu className="h-6 w-6" />
+                  </button>
+                </SheetTrigger>
+                <SheetContent side="right" className="w-[85vw] sm:w-[380px]">
+                  <div className="space-y-1">
+                    {navLinks.map((l) => (
+                      <SheetClose asChild key={l.path}>
+                        <Link to={l.path} className="block rounded-md px-3 py-2 text-base hover:bg-muted">
+                          {l.name}
+                        </Link>
+                      </SheetClose>
+                    ))}
+                  </div>
+                  <Separator className="my-4" />
+                  <div className="space-y-2">
+                    {isLoading ? null : (
+                      isAuthenticated ? (
+                        <SheetClose asChild>
+                          <Link to="/assembleia" className="block rounded-md px-3 py-2 text-base hover:bg-muted">
+                            Acessar QG
+                          </Link>
+                        </SheetClose>
+                      ) : (
+                        <Button className="w-full" onClick={() => onOpenManifesto && onOpenManifesto()}>Assine o Manifesto</Button>
+                      )
+                    )}
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </div>
+          </div>
         </div>
       </div>
     </motion.nav>

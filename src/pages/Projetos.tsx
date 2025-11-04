@@ -7,7 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { FileText, Calendar, TrendingUp, ExternalLink, Sparkles } from "lucide-react";
+import { FileText, Calendar, TrendingUp, Sparkles } from "lucide-react";
 
 export default function Projetos() {
   return (
@@ -69,21 +69,9 @@ export default function Projetos() {
               viewport={{ once: true }}
               className="relative aspect-video rounded-2xl overflow-hidden shadow-cinematic"
             >
-              {/* Video Demo Placeholder */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                    <ExternalLink className="w-10 h-10 text-primary-foreground" />
-                  </div>
-                  <p className="text-lg font-semibold">Demo da Influ.IA</p>
-                  <p className="text-sm text-muted-foreground">
-                    Veja como funciona
-                  </p>
-                </div>
-              </div>
               <img
                 src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1000&q=80"
-                alt="Demo Influ.IA"
+                alt="Imagem representativa da Influ.IA"
                 className="w-full h-full object-cover opacity-50"
               />
             </motion.div>
@@ -152,7 +140,7 @@ export default function Projetos() {
               A Ferramenta que Você Ajuda a Construir
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Ao apoiar o crowdfunding, você ganha acesso a uma ferramenta
+              Ao apoiar o crowdfunding, você ajuda no desenvolvimento de uma ferramenta
               poderosa. Isso é o que ela faz:
             </p>
           </motion.div>
@@ -284,7 +272,7 @@ export default function Projetos() {
             <h2 className="text-section-title mb-12">Pronto para sua missão?</h2>
 
             <a
-              href="https://influia.com.br"
+              href="https://benfeitoria.com/projeto/influ"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -299,7 +287,7 @@ export default function Projetos() {
             </a>
 
             <p className="text-sm text-muted-foreground mt-6">
-              Você será redirecionado para o site oficial da Influ.IA
+              Você será redirecionado para a página da campanha na Benfeitoria
             </p>
           </motion.div>
         </div>

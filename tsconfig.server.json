@@ -1,0 +1,21 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "module": "NodeNext"
+  },
+  "include": [
+    "src/server.ts",
+    "src/db.ts",
+    "src/auth.middleware.ts",
+    "src/types/express.d.ts"
+  ],
+  "exclude": [
+    "src/components",
+    "src/pages",
+    "src/contexts",
+    "src/hooks",
+    "src/**/*.spec.ts",
+    "src/**/*.spec.tsx"
+  ]
+}
