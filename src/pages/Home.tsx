@@ -61,12 +61,12 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
 
       {/* O Problema - A Mente Adoece */}
       <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-6 overflow-hidden" style={{ zIndex: 0 }}>
-        <ParallaxBackground imageSrc="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1920&q=80" />
+        <ParallaxBackground imageSrc="https://images.pexels.com/photos/8036649/pexels-photo-8036649.jpeg?_gl=1*es2dgo*_ga*MTgwMTI4MDUxOS4xNzYxMTc4MDk2*_ga_8JE65Q40S6*czE3NjIzMTIzNTQkbzckZzEkdDE3NjIzMTU3MTkkajU1JGwwJGgw" />
         <div className="container mx-auto relative z-10">
           <TensionSection
             title={homeCopy.symptoms.mind.title}
             description={homeCopy.symptoms.mind.description}
-            imageSrc="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&q=80"
+            imageSrc="https://images.pexels.com/photos/775091/pexels-photo-775091.jpeg?_gl=1*ptwhd8*_ga*MTgwMTI4MDUxOS4xNzYxMTc4MDk2*_ga_8JE65Q40S6*czE3NjIzMTIzNTQkbzckZzEkdDE3NjIzMTQ4NzYkajU5JGwwJGgw"
           />
         </div>
       </section>
@@ -78,7 +78,7 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
           <TensionSection
             title={homeCopy.symptoms.world.title}
             description={homeCopy.symptoms.world.description}
-            imageSrc="https://images.unsplash.com/photo-1621451537084-482c73073a0f?w=800&q=80"
+            imageSrc="https://images.pexels.com/photos/11696347/pexels-photo-11696347.jpeg?_gl=1*n2pp03*_ga*MTgwMTI4MDUxOS4xNzYxMTc4MDk2*_ga_8JE65Q40S6*czE3NjIzMTIzNTQkbzckZzEkdDE3NjIzMTUwNDgkajU0JGwwJGgw"
             reverse
           />
         </div>
@@ -86,12 +86,12 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
 
       {/* O Problema - A Criação Morre */}
       <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-6 overflow-hidden" style={{ zIndex: 0 }}>
-        <ParallaxBackground imageSrc="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1920&q=80" />
+        <ParallaxBackground imageSrc="https://images.pexels.com/photos/4874406/pexels-photo-4874406.jpeg?_gl=1*1sbbsoy*_ga*MTgwMTI4MDUxOS4xNzYxMTc4MDk2*_ga_8JE65Q40S6*czE3NjIzMTIzNTQkbzckZzEkdDE3NjIzMTU5OTQkajM1JGwwJGgw" />
         <div className="container mx-auto relative z-10">
           <TensionSection
             title={homeCopy.symptoms.creation.title}
             description={homeCopy.symptoms.creation.description}
-            imageSrc="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&q=80"
+            imageSrc="https://images.pexels.com/photos/210766/pexels-photo-210766.jpeg?_gl=1*xhxej0*_ga*MTgwMTI4MDUxOS4xNzYxMTc4MDk2*_ga_8JE65Q40S6*czE3NjIzMTIzNTQkbzckZzEkdDE3NjIzMTYxMzQkajM3JGwwJGgw"
           />
         </div>
       </section>
