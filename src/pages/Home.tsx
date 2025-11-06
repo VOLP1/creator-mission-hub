@@ -61,24 +61,24 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
 
       {/* O Problema - A Mente Adoece */}
       <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-6 overflow-hidden" style={{ zIndex: 0 }}>
-        <ParallaxBackground imageSrc="https://images.pexels.com/photos/8036649/pexels-photo-8036649.jpeg?_gl=1*es2dgo*_ga*MTgwMTI4MDUxOS4xNzYxMTc4MDk2*_ga_8JE65Q40S6*czE3NjIzMTIzNTQkbzckZzEkdDE3NjIzMTU3MTkkajU1JGwwJGgw" />
+  <ParallaxBackground imageSrc="/images/home/mind-bg-1600.avif" priority="eager" />
         <div className="container mx-auto relative z-10">
           <TensionSection
             title={homeCopy.symptoms.mind.title}
             description={homeCopy.symptoms.mind.description}
-            imageSrc="https://images.pexels.com/photos/775091/pexels-photo-775091.jpeg?_gl=1*ptwhd8*_ga*MTgwMTI4MDUxOS4xNzYxMTc4MDk2*_ga_8JE65Q40S6*czE3NjIzMTIzNTQkbzckZzEkdDE3NjIzMTQ4NzYkajU5JGwwJGgw"
+            imageSrc="/images/home/mind-photo-1024.webp"
           />
         </div>
       </section>
 
       {/* O Problema - O Mundo Real Sofre */}
       <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-6 overflow-hidden" style={{ zIndex: 0 }}>
-        <ParallaxBackground imageSrc="https://images.unsplash.com/photo-1621451537084-482c73073a0f?w=1920&q=80" />
+  <ParallaxBackground imageSrc="/images/home/world-bg-1600.avif" />
         <div className="container mx-auto relative z-10">
           <TensionSection
             title={homeCopy.symptoms.world.title}
             description={homeCopy.symptoms.world.description}
-            imageSrc="https://images.pexels.com/photos/11696347/pexels-photo-11696347.jpeg?_gl=1*n2pp03*_ga*MTgwMTI4MDUxOS4xNzYxMTc4MDk2*_ga_8JE65Q40S6*czE3NjIzMTIzNTQkbzckZzEkdDE3NjIzMTUwNDgkajU0JGwwJGgw"
+            imageSrc="/images/home/world-photo-1024.webp"
             reverse
           />
         </div>
@@ -86,12 +86,12 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
 
       {/* O Problema - A Criação Morre */}
       <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-6 overflow-hidden" style={{ zIndex: 0 }}>
-        <ParallaxBackground imageSrc="https://images.pexels.com/photos/4874406/pexels-photo-4874406.jpeg?_gl=1*1sbbsoy*_ga*MTgwMTI4MDUxOS4xNzYxMTc4MDk2*_ga_8JE65Q40S6*czE3NjIzMTIzNTQkbzckZzEkdDE3NjIzMTU5OTQkajM1JGwwJGgw" />
+  <ParallaxBackground imageSrc="/images/home/creation-bg-1600.avif" />
         <div className="container mx-auto relative z-10">
           <TensionSection
             title={homeCopy.symptoms.creation.title}
             description={homeCopy.symptoms.creation.description}
-            imageSrc="https://images.pexels.com/photos/210766/pexels-photo-210766.jpeg?_gl=1*xhxej0*_ga*MTgwMTI4MDUxOS4xNzYxMTc4MDk2*_ga_8JE65Q40S6*czE3NjIzMTIzNTQkbzckZzEkdDE3NjIzMTYxMzQkajM3JGwwJGgw"
+            imageSrc="/images/home/creation-photo-1024.webp"
           />
         </div>
       </section>
@@ -181,7 +181,13 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
                 transition={{ duration: 0.8, delay: 0.4, ease: 'easeOut' }}
                 className="relative w-full max-w-4xl h-[40vh] rounded-2xl overflow-hidden shadow-cinematic"
               >
-                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80')] bg-cover bg-center" />
+                <img
+                  src="/images/home/surgir-photo-1600.avif"
+                  alt="Colaboração de pessoas"
+                  className="absolute inset-0 w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
               </motion.div>
             </div>
@@ -213,21 +219,21 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
           icon={Megaphone}
           title="Conscientizar"
           description="Mostramos a realidade do lixo digital e físico com dados e histórias reais."
-          bgImage="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&q=80"
+          bgImage="/images/home/mission-awareness-1600.avif"
           accentColor="hsl(var(--alarm))"
         />
         <MissionCardFullScreen
           icon={Users}
           title="Unir"
           description="Conectamos criadores, ativistas e pessoas que querem mudança."
-          bgImage="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1200&q=80"
+          bgImage="/images/home/mission-unite-1600.avif"
           accentColor="hsl(var(--secondary))"
         />
         <MissionCardFullScreen
           icon={Target}
           title="Apoiar"
           description="Endossamos e promovemos projetos que são soluções reais."
-          bgImage="https://images.unsplash.com/photo-1526666923127-b2970f64b422?w=1200&q=80"
+          bgImage="/images/home/mission-support-1600.avif"
           accentColor="hsl(var(--primary))"
         />
       </div>
@@ -248,7 +254,12 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
               style={{ minHeight: '600px' }}
             >
               {/* Background */}
-              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&q=80')] bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-700" />
+              <CoverImage
+                src="/images/home/mission-awareness-1600.avif"
+                alt="Megafone"
+                className="grayscale group-hover:grayscale-0 transition-all duration-700"
+                fetchPriority="low"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/30" />
               
               {/* Content */}
@@ -271,7 +282,12 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
               style={{ minHeight: '290px' }}
             >
               {/* Background */}
-              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1200&q=80')] bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-700" />
+              <CoverImage
+                src="/images/home/mission-unite-1600.avif"
+                alt="Pessoas unidas"
+                className="grayscale group-hover:grayscale-0 transition-all duration-700"
+                fetchPriority="low"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--secondary))] via-[hsl(var(--secondary))]/80 to-[hsl(var(--secondary))]/40" />
               
               {/* Content */}
@@ -294,7 +310,12 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
               style={{ minHeight: '290px' }}
             >
               {/* Background */}
-              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1526666923127-b2970f64b422?w=1200&q=80')] bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-700" />
+              <CoverImage
+                src="/images/home/mission-support-1600.avif"
+                alt="Alvo de foco"
+                className="grayscale group-hover:grayscale-0 transition-all duration-700"
+                fetchPriority="low"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--primary))] via-[hsl(var(--primary))]/80 to-[hsl(var(--primary))]/40" />
               
               {/* Content */}
@@ -361,7 +382,7 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
         >
           {/* Background com Parallax */}
           <div className="absolute inset-0">
-            <ParallaxBackground imageSrc="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1920&q=80" />
+            <ParallaxBackground imageSrc="/images/home/deep-dive-report-1600.avif" />
           </div>
           
           {/* Overlay escuro que clareia no hover */}
@@ -414,7 +435,7 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
         >
           {/* Background com Parallax */}
           <div className="absolute inset-0">
-            <ParallaxBackground imageSrc="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1920&q=80" />
+            <ParallaxBackground imageSrc="/images/home/deep-dive-manifesto-1600.avif" />
           </div>
           
           {/* Overlay escuro que clareia no hover */}
@@ -518,7 +539,12 @@ function StickyHero() {
       >
         {/* Backgrounds */}
         <div className="absolute inset-0 bg-gradient-tension opacity-90 z-0" />
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80')] bg-cover bg-center opacity-20 z-0" />
+        <CoverImage
+          src="/images/home/hero-bg.jpg"
+          alt="Plano de fundo"
+          className="opacity-20 z-0"
+          fetchPriority="low"
+        />
         <div className="absolute inset-0 bg-black/35 z-0" />
 
         {/* Stage 1: Gancho */}
@@ -598,6 +624,8 @@ function TensionSection({
           src={imageSrc}
           alt={title}
           className="w-full h-full object-cover grayscale"
+          loading="lazy"
+          decoding="async"
         />
       </div>
     </motion.div>
@@ -678,29 +706,69 @@ function DeepDiveCard({
   );
 }
 
+// CoverImage - absolute cover <img> with sensible defaults for perf
+function CoverImage({
+  src,
+  alt = "",
+  className = "",
+  fetchPriority = "auto",
+}: {
+  src: string;
+  alt?: string;
+  className?: string;
+  fetchPriority?: "high" | "low" | "auto";
+}) {
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className={`absolute inset-0 w-full h-full object-cover ${className}`}
+      loading="lazy"
+      decoding="async"
+      fetchPriority={fetchPriority}
+      style={{ willChange: "transform" }}
+      aria-hidden={alt === ""}
+    />
+  );
+}
+
 // ParallaxBackground - Componente simples de fundo parallax
-function ParallaxBackground({ imageSrc }: { imageSrc: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  
+function ParallaxBackground({ imageSrc, priority = "lazy" }: { imageSrc: string; priority?: "eager" | "lazy" }) {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  // Parallax only when it helps UX: disable for reduced motion or small screens
+  const prefersReduced = typeof window !== 'undefined' && window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false;
+  const isMobile = typeof window !== 'undefined' && window.matchMedia ? window.matchMedia('(max-width: 768px)').matches : false;
+
   const { scrollYProgress } = useScroll({
-    target: ref,
+    target: wrapperRef,
     offset: ["start end", "end start"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
+  // Aumenta parallax no desktop, mantém moderado no mobile e desativa para reduced-motion
+  let parallaxRange: [string, string];
+  if (prefersReduced) {
+    parallaxRange = ["0%", "0%"]; // respeita acessibilidade
+  } else if (isMobile) {
+    parallaxRange = ["-12%", "12%"]; // mobile mais leve para suavidade
+  } else {
+    parallaxRange = ["-25%", "25%"]; // desktop mais forte
+  }
+  const y = useTransform(scrollYProgress, [0, 1], parallaxRange);
 
   return (
-    <motion.div
-      ref={ref}
-      style={{ y }}
-      className="absolute inset-0 w-full h-[120%] -top-[10%]"
-    >
-      <div 
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${imageSrc})` }}
+    <div ref={wrapperRef} className="absolute inset-0 w-full h-[120%] -top-[10%]">
+      <motion.img
+        src={imageSrc}
+        alt=""
+        aria-hidden
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ y, willChange: "transform", transform: 'translateZ(0)' }}
+        loading={priority}
+        decoding="async"
       />
       <div className="absolute inset-0 bg-black/60" />
-    </motion.div>
+    </div>
   );
 }
 
