@@ -389,7 +389,7 @@ function StatCard({
       className="bg-background/10 backdrop-blur-sm p-12 rounded-2xl text-center border border-background/20"
     >
       <Icon className="w-16 h-16 text-primary mx-auto mb-6" />
-      <div className="text-6xl font-bold text-background mb-4">{value}</div>
+  <div className="text-4xl sm:text-5xl md:text-6xl font-bold text-background mb-4">{value}</div>
       <div className="text-xl text-background/80">{label}</div>
     </motion.div>
   );

@@ -60,6 +60,29 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+### Typography (mobile-first)
+
+To improve readability on phones and avoid overflow, use the centralized Heading component:
+
+- Component: `src/components/ui/heading.tsx`
+- Variants:
+	- `hero`: landing titles — text-3xl on mobile up to lg:text-7xl
+	- `section`: section titles — text-2xl on mobile up to lg:text-5xl
+	- `sub`: supporting titles — text-xl on mobile up to md:text-3xl
+	- `stat`: numeric/KPI — text-4xl on mobile up to lg:text-7xl
+
+Example:
+
+```tsx
+import { Heading } from "@/components/ui/heading";
+
+<Heading as="h2" variant="section" className="text-secondary-foreground">
+	Nossa Primeira Missão
+</Heading>
+```
+
+When animating, wrap Heading in a motion.div instead of using motion.h2.
+
 ## Tipografia do Movimento
 
 - Fonte padrão (global): Montserrat

@@ -337,7 +337,7 @@ function CounterDisplay({
 
   return (
     <div ref={ref} className="text-center">
-      <div className={`text-6xl md:text-7xl font-bold text-${color}`}>
+  <div className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-${color}`}>
         {prefix}
         {count}
         {suffix && <span className="ml-2">{suffix}</span>}

@@ -11,7 +11,7 @@ RUN npm install
 # Copia todo o resto do código-fonte
 COPY . .
 
-# Roda o script de build do servidor que criamos
+# Compila apenas o servidor (frontend roda separado no Coolify)
 RUN npm run build:server
 
 # Estágio 2: Produção (Apenas o código rodando)
@@ -22,7 +22,7 @@ WORKDIR /app
 COPY --from=builder /app/package*.json ./
 RUN npm ci --only=production
 
-# Copia o JavaScript compilado (da pasta 'dist')
+# Copia apenas o build do servidor (./dist)
 COPY --from=builder /app/dist ./dist
 
 # Expõe a porta que o 'app.listen' usa

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown, Target, Users, Megaphone } from "lucide-react";
 import { Link } from "react-router-dom";
 import { homeCopy } from "@/content/home";
+import { Heading } from "@/components/ui/heading";
 
 export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void }) {
   const surgirRef = useRef<HTMLDivElement>(null);
@@ -60,7 +61,7 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
       <StickyHero />
 
       {/* O Problema - A Mente Adoece */}
-      <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-6 overflow-hidden" style={{ zIndex: 0 }}>
+  <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-4 md:px-6 overflow-hidden" style={{ zIndex: 0 }}>
   <ParallaxBackground imageSrc="/images/home/mind-bg-1600.avif" priority="eager" />
         <div className="container mx-auto relative z-10">
           <TensionSection
@@ -72,7 +73,7 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
       </section>
 
       {/* O Problema - O Mundo Real Sofre */}
-      <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-6 overflow-hidden" style={{ zIndex: 0 }}>
+  <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-4 md:px-6 overflow-hidden" style={{ zIndex: 0 }}>
   <ParallaxBackground imageSrc="/images/home/world-bg-1600.avif" />
         <div className="container mx-auto relative z-10">
           <TensionSection
@@ -85,7 +86,7 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
       </section>
 
       {/* O Problema - A Criação Morre */}
-      <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-6 overflow-hidden" style={{ zIndex: 0 }}>
+  <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-4 md:px-6 overflow-hidden" style={{ zIndex: 0 }}>
   <ParallaxBackground imageSrc="/images/home/creation-bg-1600.avif" />
         <div className="container mx-auto relative z-10">
           <TensionSection
@@ -239,7 +240,7 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
       </div>
 
       {/* DESKTOP: Bento Box Style */}
-      <section className="hidden md:block py-20 px-6 bg-background">
+  <section className="hidden md:block py-20 px-6 bg-background">
         <div className="container mx-auto">
           {/* Bento Grid */}
           <div className="grid grid-cols-2 gap-6 max-w-6xl mx-auto" style={{ gridTemplateRows: 'auto auto' }}>
@@ -333,7 +334,7 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
       </section>
 
       {/* A Missão */}
-      <section className="py-32 px-6 bg-secondary">
+      <section className="py-32 px-4 md:px-6 bg-secondary">
         <div className="container mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -342,9 +343,9 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
             viewport={{ once: true }}
             className="max-w-4xl mx-auto"
           >
-            <h2 className="text-section-title text-secondary-foreground mb-8">
+            <Heading as="h2" variant="section" className="text-secondary-foreground mb-8">
               Nossa Primeira Missão: Apoiamos a Solução Real.
-            </h2>
+            </Heading>
             <p className="text-xl text-secondary-foreground/90 mb-12">
               Endossamos o crowdfunding da Influ.IA, uma ferramenta que
               acreditamos ser a solução real para o lixo digital, pois liberta
@@ -352,9 +353,9 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
             </p>
 
             <div className="bg-secondary-foreground/10 backdrop-blur-sm rounded-2xl p-12 mb-12">
-              <h3 className="text-3xl md:text-4xl font-bold text-secondary-foreground mb-6">
+              <Heading as="h3" variant="sub" className="text-secondary-foreground mb-6">
                 E o seu apoio tem impacto duplo:
-              </h3>
+              </Heading>
               <div className="flex flex-col md:flex-row items-center justify-center gap-8 text-secondary-foreground">
                 <CounterDisplay value={100} prefix="R$" />
                 <span className="text-4xl">=</span>
