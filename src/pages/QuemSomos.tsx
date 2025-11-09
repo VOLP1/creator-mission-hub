@@ -60,11 +60,11 @@ export default function QuemSomos({ onOpenManifesto }: QuemSomosProps) {
             Este é um convite para sentir, questionar e agir. Role com calma. Leia com presença. No fim, assine apenas se fizer sentido para você.
           </motion.p>
 
-          <div className="mt-10 flex flex-wrap gap-4">
-            <Button size="lg" className="px-6" onClick={onOpenManifesto}>
+          <div className="mt-10 flex flex-col sm:flex-row sm:flex-wrap gap-4 items-start sm:items-center">
+            <Button size="lg" className="px-6 w-full sm:w-auto" onClick={onOpenManifesto}>
               Assinar o Manifesto
             </Button>
-            <a href="#manifesto" className="inline-flex items-center gap-2 text-primary hover:underline">
+            <a href="#manifesto" className="inline-flex items-center gap-2 text-primary hover:underline text-sm sm:text-base">
               Ler o manifesto <ArrowDownRight className="w-4 h-4" />
             </a>
           </div>
@@ -162,7 +162,7 @@ export default function QuemSomos({ onOpenManifesto }: QuemSomosProps) {
 
 function ScrollHint() {
   return (
-    <a href="#manifesto" className="group absolute left-1/2 -translate-x-1/2 bottom-8 md:bottom-14 inline-flex flex-col items-center gap-2 text-primary/90">
+    <a href="#manifesto" className="hidden sm:inline-flex group absolute left-1/2 -translate-x-1/2 bottom-8 md:bottom-14 flex-col items-center gap-2 text-primary/90">
       <span className="text-xs uppercase tracking-widest opacity-80">Role para ler</span>
       <motion.span
         aria-hidden

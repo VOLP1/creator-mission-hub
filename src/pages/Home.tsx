@@ -393,7 +393,7 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
           <div className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--alarm))]/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700" />
 
           {/* Conteúdo */}
-          <div className="relative z-10 h-full flex flex-col items-center justify-center px-8 md:px-16">
+          <div className="relative z-10 h-full flex flex-col items-center justify-center px-8 md:px-16 pb-16">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -413,14 +413,14 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
               {/* Botão */}
               <Button
                 size="lg"
-                className="bg-[hsl(var(--alarm))] hover:bg-[hsl(var(--alarm))]/90 text-background text-xl px-12 py-6 shadow-glow opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
+                className="bg-[hsl(var(--alarm))] hover:bg-[hsl(var(--alarm))]/90 text-background text-base px-6 py-4 md:text-xl md:px-12 md:py-6 shadow-glow opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
               >
                 Veja o Relatório Completo
               </Button>
             </motion.div>
 
             {/* Indicador de hover */}
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-background/60 group-hover:text-background transition-all duration-700">
+            <div className="hidden md:block absolute bottom-8 left-1/2 -translate-x-1/2 text-background/60 group-hover:text-background transition-all duration-700">
               <p className="text-sm uppercase tracking-wider">Clique para explorar</p>
             </div>
           </div>
@@ -446,7 +446,7 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
           <div className="absolute inset-0 bg-gradient-to-bl from-[hsl(var(--primary))]/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700" />
 
           {/* Conteúdo */}
-          <div className="relative z-10 h-full flex flex-col items-center justify-center px-8 md:px-16">
+          <div className="relative z-10 h-full flex flex-col items-center justify-center px-8 md:px-16 pb-16">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -466,14 +466,14 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
               {/* Botão */}
               <Button
                 size="lg"
-                className="bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))]/90 text-primary-foreground text-xl px-12 py-6 shadow-glow opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
+                className="bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))]/90 text-primary-foreground text-base px-6 py-4 md:text-xl md:px-12 md:py-6 shadow-glow opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
               >
                 Leia nosso Manifesto
               </Button>
             </motion.div>
 
             {/* Indicador de hover */}
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-background/60 group-hover:text-background transition-all duration-700">
+            <div className="hidden md:block absolute bottom-8 left-1/2 -translate-x-1/2 text-background/60 group-hover:text-background transition-all duration-700">
               <p className="text-sm uppercase tracking-wider">Clique para explorar</p>
             </div>
           </div>
