@@ -352,17 +352,6 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
               os criadores para criarem com alma.
             </p>
 
-            <div className="bg-secondary-foreground/10 backdrop-blur-sm rounded-2xl p-12 mb-12">
-              <Heading as="h3" variant="sub" className="text-secondary-foreground mb-6">
-                E o seu apoio tem impacto duplo:
-              </Heading>
-              <div className="flex flex-col md:flex-row items-center justify-center gap-8 text-secondary-foreground">
-                <CounterDisplay value={100} prefix="R$" />
-                <span className="text-4xl">=</span>
-                <CounterDisplay value={1} suffix="kg de lixo removido" />
-              </div>
-            </div>
-
             <Button
               size="lg"
               onClick={() => onOpenManifesto && onOpenManifesto()}

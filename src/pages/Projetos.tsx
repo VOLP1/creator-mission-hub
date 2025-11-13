@@ -79,52 +79,7 @@ export default function Projetos() {
         </div>
       </section>
 
-      {/* O Compromisso - DESTAQUE MÁXIMO */}
-      <section className="py-32 px-6 bg-secondary relative overflow-hidden">
-        {/* Decorative Background */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-primary rounded-full filter blur-3xl" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary rounded-full filter blur-3xl" />
-        </div>
-
-        <div className="container mx-auto relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="max-w-4xl mx-auto text-center"
-          >
-            <h2 className="text-section-title text-secondary-foreground mb-8">
-              O Compromisso <span className="font-poppins">+Creator</span> com a Sua Ação
-            </h2>
-
-            <div className="bg-secondary-foreground/10 backdrop-blur-sm rounded-3xl p-12 md:p-16 shadow-cinematic">
-              <p className="text-2xl md:text-3xl text-secondary-foreground font-light mb-12">
-                Para cada
-              </p>
-
-              <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-12">
-                <CounterDisplay value={100} prefix="R$" color="primary" />
-                <span className="text-5xl text-secondary-foreground font-bold">
-                  =
-                </span>
-                <CounterDisplay
-                  value={1}
-                  suffix="kg"
-                  label="de lixo removido"
-                  color="primary"
-                />
-              </div>
-
-              <p className="text-xl text-secondary-foreground/90 max-w-2xl mx-auto">
-                Que VOCÊ doar ao crowdfunding da Influ.IA, NÓS (o Movimento
-                <span className="font-poppins"> +Creator</span>) vamos remover das ruas.
-              </p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      {/* O Compromisso - REMOVIDO por decisão editorial */}
 
       {/* Features da Influ.IA */}
       <section className="py-32 px-6 bg-background">
@@ -200,19 +155,7 @@ export default function Projetos() {
             viewport={{ once: true }}
           >
             <Accordion type="single" collapsible className="space-y-4">
-              <AccordionItem
-                value="item-1"
-                className="bg-background rounded-xl px-6 shadow-md"
-              >
-                <AccordionTrigger className="text-lg font-semibold">
-                  Para onde vai meu R$100?
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
-                  100% da sua doação vai diretamente para o crowdfunding da
-                  Influ.IA. O compromisso de remover 1kg de lixo é custeado pelo
-                  Movimento +Creator através de parcerias e apoiadores.
-                </AccordionContent>
-              </AccordionItem>
+              {/* Removido: FAQ com R$100 = 1kg */}
 
               <AccordionItem
                 value="item-2"
