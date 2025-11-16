@@ -344,12 +344,15 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
             className="max-w-4xl mx-auto"
           >
             <Heading as="h2" variant="section" className="text-secondary-foreground mb-8">
-              Nossa Primeira Missão: Apoiamos a Solução Real.
+              Nossa Primeira Missão: Construir o QG.
             </Heading>
-            <p className="text-xl text-secondary-foreground/90 mb-12">
-              Endossamos o crowdfunding da Influ.IA, uma ferramenta que
-              acreditamos ser a solução real para o lixo digital, pois liberta
-              os criadores para criarem com alma.
+            <p className="text-xl text-secondary-foreground/90 mb-6">
+              O +Creator não é um movimento que dita regras; é uma co-criação. O plano de batalha está em branco. Nosso QG (a "Assembleia de Fundação") acabou de abrir. Precisamos da sua inteligência <em>agora</em> para definir os próximos passos.
+            </p>
+
+            {/* Destaque de Impacto (Nova Promessa) */}
+            <p className="text-2xl font-semibold text-secondary-foreground/90 mb-12">
+              Seu impacto é imediato: Assine o Manifesto e sua primeira missão será definir o futuro do movimento.
             </p>
 
             <Button
