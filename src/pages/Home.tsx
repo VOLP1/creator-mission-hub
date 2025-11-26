@@ -60,40 +60,52 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
       {/* Hero Section - sticky with two stages (gancho -> diagnóstico) */}
       <StickyHero />
 
-      {/* O Problema - A Mente Adoece */}
+      {/* Parallax 1 - A Apatia Digital */}
   <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-4 md:px-6 overflow-hidden" style={{ zIndex: 0 }}>
   <ParallaxBackground imageSrc="/images/home/mind-bg-1600.avif" priority="eager" />
         <div className="container mx-auto relative z-10">
           <TensionSection
-            title={homeCopy.symptoms.mind.title}
-            description={homeCopy.symptoms.mind.description}
+            title={"A Apatia Digital"}
+            description={"As redes sociais deveriam gerar pertencimento, mas hoje geram dependência. Estamos perdendo a capacidade de estar presentes."}
             imageSrc="/images/home/mind-photo-1024.webp"
           />
         </div>
       </section>
 
-      {/* O Problema - O Mundo Real Sofre */}
+      {/* Parallax 2 - Quanto tempo de vida te resta? */}
   <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-4 md:px-6 overflow-hidden" style={{ zIndex: 0 }}>
-  <ParallaxBackground imageSrc="/images/home/world-bg-1600.avif" />
+  <ParallaxBackground imageSrc="/images/home/sessao2fotogrande-1600.avif" />
         <div className="container mx-auto relative z-10">
           <TensionSection
-            title={homeCopy.symptoms.world.title}
-            description={homeCopy.symptoms.world.description}
-            imageSrc="/images/home/world-photo-1024.webp"
+            title={"Quanto tempo de vida te resta?"}
+            description={"Você já calculou quantos anos de vida reais você vai perder olhando para uma tela se continuar nesse ritmo? A matemática assusta."}
+            imageSrc="/images/home/sessao2fotopequena-1024.avif"
             reverse
           />
+          {/* Ação: Botão para Calculadora */}
+          <div className="mt-8 md:mt-12">
+            <Button asChild>
+              <Link to="/calculadora">Calcular meu Tempo Perdido</Link>
+            </Button>
+          </div>
         </div>
       </section>
 
-      {/* O Problema - A Criação Morre */}
+      {/* Parallax 3 - Qual é o seu Arquétipo Digital? */}
   <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-4 md:px-6 overflow-hidden" style={{ zIndex: 0 }}>
-  <ParallaxBackground imageSrc="/images/home/creation-bg-1600.avif" />
+  <ParallaxBackground imageSrc="/images/home/sessao3fotogrande-1600.avif" />
         <div className="container mx-auto relative z-10">
           <TensionSection
-            title={homeCopy.symptoms.creation.title}
-            description={homeCopy.symptoms.creation.description}
-            imageSrc="/images/home/creation-photo-1024.webp"
+            title={"Qual é o seu Arquétipo Digital?"}
+            description={"Você está no comando ou no piloto automático? Faça o teste para identificar os padrões que ditam seu uso e receba o plano ideal para o seu perfil."}
+            imageSrc="/images/home/sessao3fotopequena-1024.avif"
           />
+          {/* Ação: Botão para Quiz */}
+          <div className="mt-8 md:mt-12">
+            <Button asChild>
+              <Link to="/quiz">Descobrir meu Arquétipo</Link>
+            </Button>
+          </div>
         </div>
       </section>
 
@@ -218,8 +230,8 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
       <div className="block md:hidden">
         <MissionCardFullScreen
           icon={Megaphone}
-          title="Conscientizar"
-          description="Mostramos a realidade do lixo digital e físico com dados e histórias reais."
+          title="Educar"
+          description="Dicas práticas para desintoxicar sua relação com as redes."
           bgImage="/images/home/mission-awareness-1600.avif"
           accentColor="hsl(var(--alarm))"
         />
@@ -266,9 +278,9 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
               {/* Content */}
               <div className="relative z-10 p-12 h-full flex flex-col justify-end">
                 <Megaphone className="w-16 h-16 text-primary mb-6" />
-                <h3 className="text-5xl font-bold text-background mb-4">Conscientizar</h3>
+                <h3 className="text-5xl font-bold text-background mb-4">Educar</h3>
                 <p className="text-xl text-background/90 max-w-md">
-                  Mostramos a realidade do lixo digital e físico com dados e histórias reais.
+                  Dicas práticas para desintoxicar sua relação com as redes.
                 </p>
               </div>
             </motion.div>
@@ -294,9 +306,9 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
               {/* Content */}
               <div className="relative z-10 p-8 h-full flex flex-col justify-end">
                 <Users className="w-12 h-12 text-background mb-4" />
-                <h3 className="text-3xl font-bold text-background mb-2">Unir</h3>
+                <h3 className="text-3xl font-bold text-background mb-2">Conectar</h3>
                 <p className="text-lg text-background/90">
-                  Conectamos criadores, ativistas e pessoas que querem mudança.
+                  Ações de comunidade que unem as pessoas em uma jornada emocional.
                 </p>
               </div>
             </motion.div>
@@ -322,9 +334,9 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
               {/* Content */}
               <div className="relative z-10 p-8 h-full flex flex-col justify-end">
                 <Target className="w-12 h-12 text-background mb-4" />
-                <h3 className="text-3xl font-bold text-background mb-2">Apoiar</h3>
+                <h3 className="text-3xl font-bold text-background mb-2">Mobilizar</h3>
                 <p className="text-lg text-background/90">
-                  Endossamos e promovemos projetos que são soluções reais.
+                  Tornar-se um símbolo cultural da luta pela saúde mental no digital.
                 </p>
               </div>
             </motion.div>
@@ -333,7 +345,7 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
         </div>
       </section>
 
-      {/* A Missão */}
+      {/* A Missão - WhatsApp CTA */}
       <section className="py-32 px-4 md:px-6 bg-secondary">
         <div className="container mx-auto text-center">
           <motion.div
@@ -344,23 +356,20 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
             className="max-w-4xl mx-auto"
           >
             <Heading as="h2" variant="section" className="text-secondary-foreground mb-8">
-              Nossa Primeira Missão: Construir o QG.
+              Quer dar o primeiro passo?
             </Heading>
             <p className="text-xl text-secondary-foreground/90 mb-6">
-              O +Creator não é um movimento que dita regras; é uma co-criação. O plano de batalha está em branco. Nosso QG (a "Assembleia de Fundação") acabou de abrir. Precisamos da sua inteligência <em>agora</em> para definir os próximos passos.
+              Na comunidade +Creator você encontra recursos para melhorar sua relação com as redes e se conecta com pessoas que buscam o mesmo.
             </p>
 
-            {/* Destaque de Impacto (Nova Promessa) */}
+            {/* Destaque */}
             <p className="text-2xl font-semibold text-secondary-foreground/90 mb-12">
-              Seu impacto é imediato: Assine o Manifesto e sua primeira missão será definir o futuro do movimento.
+              Sua qualidade de vida começa agora.
             </p>
 
-            <Button
-              size="lg"
-              onClick={() => onOpenManifesto && onOpenManifesto()}
-              className="bg-primary hover:bg-primary/90 text-primary-foreground text-xl px-12 py-6 shadow-glow hover:scale-105 transition-all"
-            >
-              Assine o Manifesto
+            {/* Botão Principal - WhatsApp */}
+            <Button asChild size="lg" className="text-base md:text-xl px-8 md:px-12 py-6 shadow-glow">
+              <a href="https://wa.me/55..." target="_blank" rel="noopener noreferrer">Entrar no Grupo do WhatsApp</a>
             </Button>
           </motion.div>
         </div>
@@ -546,9 +555,9 @@ function StickyHero() {
           style={{ opacity: s1Opacity, transform: `translateY(${s1Y}px)` }}
         >
           <div className="text-center px-6 max-w-5xl">
-            <h1 className="text-hero text-background mb-6">{homeCopy.hero.h1B}</h1>
+            <h1 className="text-hero text-background mb-6">{"Menos ruído, mais presença."}</h1>
             <h2 className="text-2xl md:text-3xl text-background/90 font-light mb-12 max-w-3xl mx-auto">
-              {homeCopy.hero.subtitle}
+              {"Antes de mudar as plataformas, precisamos mudar nossa relação com elas. O movimento para quem acredita que criar é um ato humano, profundo e inspirador."}
             </h2>
           </div>
         </div>
@@ -559,9 +568,9 @@ function StickyHero() {
           style={{ opacity: s2Opacity, transform: `translateY(${s2Y}px)` }}
         >
           <div className="text-center px-6 max-w-5xl">
-            <h2 className="text-4xl md:text-5xl font-bold text-background mb-6">{homeCopy.diagnosis.title}</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-background mb-6">{"O Dilema do Celular."}</h2>
             <p className="text-xl md:text-2xl text-background/90 font-light max-w-3xl mx-auto">
-              {homeCopy.diagnosis.paragraph}
+              {"Vivemos o estresse mental causado pela dualidade: ferramenta de informação versus inimigo do equilíbrio. O excesso de tela gera solidão conectada e apatia."}
             </p>
           </div>
         </div>

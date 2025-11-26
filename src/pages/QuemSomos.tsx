@@ -7,9 +7,6 @@ import { ArrowDownRight, ChevronDown, Quote, Rocket, ShieldCheck, Sparkles } fro
 import { Link } from "react-router-dom";
 import { Heading } from "@/components/ui/heading";
 
-type QuemSomosProps = {
-  onOpenManifesto?: () => void;
-};
 
 // Small helper for smooth reveal
 const fadeUp = {
@@ -19,7 +16,8 @@ const fadeUp = {
   transition: { duration: 0.7 },
 };
 
-export default function QuemSomos({ onOpenManifesto }: QuemSomosProps) {
+// Removido onOpenManifesto: estratégia atual não usa mais fluxo de assinatura interna.
+export default function QuemSomos() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] });
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 20, mass: 0.3 });
@@ -61,8 +59,8 @@ export default function QuemSomos({ onOpenManifesto }: QuemSomosProps) {
           </motion.p>
 
           <div className="mt-10 flex flex-col sm:flex-row sm:flex-wrap gap-4 items-start sm:items-center">
-            <Button size="lg" className="px-6 w-full sm:w-auto" onClick={onOpenManifesto}>
-              Assinar o Manifesto
+            <Button size="lg" asChild className="px-6 w-full sm:w-auto bg-primary shadow-glow hover:bg-primary/90">
+              <a href="https://wa.me/55XXXXXXXXXX" target="_blank" rel="noopener noreferrer">Entrar na Comunidade</a>
             </Button>
             <a href="#manifesto" className="inline-flex items-center gap-2 text-primary hover:underline text-sm sm:text-base">
               Ler o manifesto <ArrowDownRight className="w-4 h-4" />
@@ -151,9 +149,9 @@ export default function QuemSomos({ onOpenManifesto }: QuemSomosProps) {
 
           <QASection />
 
-          <PledgeSection onOpenManifesto={onOpenManifesto} />
+          <PledgeSection />
 
-          <CalloutAction onOpenManifesto={onOpenManifesto} />
+          <CalloutAction />
         </div>
       </section>
     </div>
@@ -288,7 +286,7 @@ function TwoColBlock({ title, body, bullets }: { title: string; body: string; bu
   );
 }
 
-function CalloutAction({ onOpenManifesto }: { onOpenManifesto?: () => void }) {
+function CalloutAction() {
   return (
     <div className="rounded-3xl border bg-gradient-to-br from-primary/10 via-transparent to-primary/5 p-6 md:p-10 text-center">
       <motion.div {...fadeUp as any}>
@@ -300,7 +298,9 @@ function CalloutAction({ onOpenManifesto }: { onOpenManifesto?: () => void }) {
         Começamos com uma Ação de Lançamento: uma limpeza física real, bancada por nós, para provar nosso caráter. Depois, lançaremos o crowdfunding para financiar a Influ.IA e ajudar a limpar o digital.
       </motion.p>
       <div className="mt-8 flex flex-wrap justify-center gap-4">
-        <Button size="lg" onClick={onOpenManifesto}>Assinar o Manifesto</Button>
+        <Button size="lg" asChild className="bg-primary shadow-glow hover:bg-primary/90">
+          <a href="https://wa.me/55XXXXXXXXXX" target="_blank" rel="noopener noreferrer">Entrar na Comunidade</a>
+        </Button>
         <Link to="/projetos">
           <Button size="lg" variant="outline">Participar da Limpeza</Button>
         </Link>
@@ -341,7 +341,7 @@ function QASection() {
   );
 }
 
-function PledgeSection({ onOpenManifesto }: { onOpenManifesto?: () => void }) {
+function PledgeSection() {
   const [value, setValue] = useState<number>(0);
   const unlocked = value >= 100;
   return (
@@ -356,9 +356,13 @@ function PledgeSection({ onOpenManifesto }: { onOpenManifesto?: () => void }) {
         <Slider value={[value]} max={100} step={1} onValueChange={(v) => setValue(v[0] ?? 0)} />
         <div className="mt-2 text-center text-sm text-muted-foreground">{value}%</div>
         <div className="mt-6 text-center">
-          <Button size="lg" disabled={!unlocked} onClick={onOpenManifesto} className={unlocked ? "" : "opacity-60"}>
-            {unlocked ? "Assinar o Manifesto agora" : "Confirme seu compromisso"}
-          </Button>
+          {unlocked ? (
+            <Button size="lg" asChild>
+              <a href="https://wa.me/55XXXXXXXXXX" target="_blank" rel="noopener noreferrer">Entrar na Comunidade</a>
+            </Button>
+          ) : (
+            <Button size="lg" disabled className="opacity-60">Confirme seu compromisso</Button>
+          )}
         </div>
       </div>
     </div>

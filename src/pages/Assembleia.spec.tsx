@@ -70,12 +70,15 @@ describe('Página Assembleia (src/pages/Assembleia.tsx)', () => {
     mockFetch.mockResolvedValue({ ok: true, json: async () => ({ id: 1 }) });
   });
 
-  it('Deve renderizar o título e os 3 campos (Tipo, Sugestão, Botão)', () => {
+  it('Deve renderizar o título, tabs de Frente de Batalha, textarea e botão', () => {
     renderAssembleia();
 
     expect(screen.getByRole('heading', { name: /Assembleia de Fundação/i })).toBeInTheDocument();
-    // Usamos 'combobox' para o <Select> do Radix/Shadcn
-    expect(screen.getByRole('combobox', { name: /Frente de Batalha/i })).toBeInTheDocument();
+    // Novo layout usa Tabs em vez de Select Radix: verificamos tablist e triggers
+    expect(screen.getByRole('tablist')).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: /Ação Física/i })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: /Ação Digital/i })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: /Comunidade/i })).toBeInTheDocument();
     expect(screen.getByLabelText(/Sua Sugestão/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Enviar Missão/i })).toBeInTheDocument();
   });
@@ -87,53 +90,39 @@ describe('Página Assembleia (src/pages/Assembleia.tsx)', () => {
 
     renderAssembleia();
 
-    // 1. Preencher o formulário
-    // (Simulando a seleção do <Select>)
-    await user.click(screen.getByRole('combobox', { name: /Frente de Batalha/i }));
-  const options = await screen.findAllByText('Ação Digital');
-  await user.click(options[options.length - 1]); // Seleciona a opção visível do Radix Select
-
+    // 1. Selecionar a tab "Ação Digital" (altera mission_type)
+    await user.click(screen.getByRole('tab', { name: /Ação Digital/i }));
     await user.type(screen.getByLabelText(/Sua Sugestão/i), 'Minha ideia de missão digital');
-    
+
     // 2. Clicar em Enviar
     await user.click(screen.getByRole('button', { name: /Enviar Missão/i }));
 
-    // 3. Verificar se a função 'mutate' do useMutation foi chamada com os dados
+    // 3. Verificar chamada à mutate
     expect(mockMutate).toHaveBeenCalledWith({
       mission_type: 'DIGITAL',
       suggestion: 'Minha ideia de missão digital',
     });
 
-    // ---- Este é o teste mais importante (Tarefa 5.2, simulação) ----
-    // Agora, vamos testar a 'mutationFn' real que o componente *deveria* ter
-    
-    // Configura o mock de fetch
+    // 4. Teste da mutationFn (simulação direta)
     mockFetch.mockResolvedValue({
       ok: true,
       json: async () => ({ id: 1, message: 'Sucesso' }),
     });
-
-    // Simula a chamada da mutationFn
-    // (No teste real, isso estaria dentro do mock do 'useMutation')
-    const apiUrl = process.env.VITE_API_BASE_URL || 'http://localhost:4000'
+    const apiUrl = process.env.VITE_API_BASE_URL || 'http://localhost:4000';
     const mutationFn = async (data: any) => {
-      const token = mockToken; // O token que o useAuth() "forneceu"
+      const token = mockToken;
       const response = await fetch(`${apiUrl}/api/v1/missions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`, // <-- O "crachá"
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(data),
       } as RequestInit);
       if (!response.ok) throw new Error('Falha');
       return response.json();
     };
-
-    // 4. Executa a função
     await mutationFn({ mission_type: 'DIGITAL', suggestion: '...' });
-
-    // 5. Verifica se o 'fetch' foi chamado com o Header correto
     expect(mockFetch).toHaveBeenCalledWith(
       `${apiUrl}/api/v1/missions`,
       expect.objectContaining({
