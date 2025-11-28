@@ -17,7 +17,7 @@ const fadeUp = {
 };
 
 // Removido onOpenManifesto: estratégia atual não usa mais fluxo de assinatura interna.
-export default function QuemSomos() {
+export default function QuemSomos({ onOpenManifesto }: { onOpenManifesto?: () => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] });
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 20, mass: 0.3 });
@@ -65,6 +65,12 @@ export default function QuemSomos() {
             <a href="#manifesto" className="inline-flex items-center gap-2 text-primary hover:underline text-sm sm:text-base">
               Ler o manifesto <ArrowDownRight className="w-4 h-4" />
             </a>
+            {/* Optional inline CTA to open the manifesto modal when parent provides handler */}
+            {onOpenManifesto && (
+              <button onClick={onOpenManifesto} className="text-sm text-primary underline">
+                Assinar agora
+              </button>
+            )}
           </div>
           <ScrollHint />
         </div>

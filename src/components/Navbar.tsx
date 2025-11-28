@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 
 // Estratégia simplificada: removida lógica de autenticação e manifesto.
 // CTA único para entrada na comunidade via WhatsApp.
-export const Navbar = () => {
+export const Navbar = ({ onOpenManifesto }: { onOpenManifesto?: () => void }) => {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === "/";
@@ -77,6 +77,18 @@ export const Navbar = () => {
               </Link>
             ))}
           </div>
+
+          {/* Small Manifesto trigger if parent provides handler */}
+          {onOpenManifesto && (
+            <div className="hidden md:block ml-6">
+              <button
+                onClick={onOpenManifesto}
+                className={`text-sm font-medium underline ${scrolled ? 'text-foreground' : 'text-background'}`}
+              >
+                Assinar Manifesto
+              </button>
+            </div>
+          )}
 
           {/* Right area: desktop CTA vs mobile menu */}
           <div className="flex items-center">
