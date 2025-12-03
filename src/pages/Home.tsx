@@ -65,12 +65,13 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
   <ParallaxBackground imageSrc="/images/home/mind-bg-1600.avif" priority="eager" />
         <div className="container mx-auto relative z-10">
           <TensionSection
-            title={"A Apatia Digital"}
-            description={"As redes sociais deveriam gerar pertencimento, mas hoje geram dependência. Estamos perdendo a capacidade de estar presentes."}
+            title={"A Mente Adoece"}
+            description={"Antes de mudar as plataformas, precisamos mudar nossa relação com elas. A +Creator está construindo uma comunidade para quem acredita que criar é um ato humano, profundo e inspirador."}
             imageSrc="/images/home/mind-photo-1024.webp"
           />
         </div>
       </section>
+    
 
       {/* Parallax 2 - Quanto tempo de vida te resta? */}
   <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-4 md:px-6 overflow-hidden" style={{ zIndex: 0 }}>
@@ -557,7 +558,7 @@ function StickyHero() {
           <div className="text-center px-6 max-w-5xl">
             <h1 className="text-hero text-background mb-6">{"Menos ruído, mais presença."}</h1>
             <h2 className="text-2xl md:text-3xl text-background/90 font-light mb-12 max-w-3xl mx-auto">
-              {"Antes de mudar as plataformas, precisamos mudar nossa relação com elas. O movimento para quem acredita que criar é um ato humano, profundo e inspirador."}
+              {"Chega de aceitar sistemas que recompensam \"fast-foods\" mentais e que punem a criação genuína. O movimento +Creator é a linha de frente para lutar de volta. Juntos."}
             </h2>
           </div>
         </div>

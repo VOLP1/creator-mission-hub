@@ -17,7 +17,6 @@ vi.mock('@tanstack/react-query', async () => ({
 
 // Page under test (doesn't exist yet, TDD red phase expected)
 import Fundadores from './Fundadores.tsx'
-
 beforeEach(() => {
   vi.clearAllMocks()
 })

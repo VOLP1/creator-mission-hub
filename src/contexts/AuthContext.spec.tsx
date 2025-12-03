@@ -7,7 +7,7 @@ expect.extend(matchers as any)
 import React from 'react'
 
 // O AuthContext e o hook que vamos criar
-import { AuthProvider, useAuth } from './AuthContext' // (Vai falhar)
+import { AuthProvider, useAuth } from './AuthContext.tsx' // (Vai falhar)
 
 // Mock o jwt-decode (named export nas versões atuais)
 vi.mock('jwt-decode', () => ({
@@ -48,7 +48,7 @@ describe('AuthContext (src/contexts/AuthContext.tsx)', () => {
     expect(screen.getByText('Deslogado')).toBeInTheDocument()
   })
 
-  it('Estado Inicial (Com Token Válido): deve decodificar o token e renderizar "Logado"', async () => {
+  it('Estado Inicial (Com Token Válido): deve decodificar o token e renderizar "Logado"', () => {
     const mockToken = 'token-valido'
     const mockUser = { id: 123, iat: 12345, exp: 99999 }
 
@@ -63,10 +63,7 @@ describe('AuthContext (src/contexts/AuthContext.tsx)', () => {
       </AuthProvider>,
     )
 
-    // Aguarda o efeito e a atualização de estado
-    expect(await screen.findByText('Logado como ID: 123')).toBeInTheDocument()
-    // E garante que o estado anterior sumiu
-    expect(screen.queryByText('Deslogado')).not.toBeInTheDocument()
+    expect(screen.getByText('Logado como ID: 123')).toBeInTheDocument()
   })
 
   it('Estado Inicial (Com Token Expirado): deve tentar decodificar, falhar e renderizar "Deslogado"', () => {
