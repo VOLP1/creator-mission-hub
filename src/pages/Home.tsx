@@ -65,12 +65,13 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
   <ParallaxBackground imageSrc="/images/home/mind-bg-1600.avif" priority="eager" />
         <div className="container mx-auto relative z-10">
           <TensionSection
-            title={"A Apatia Digital"}
-            description={"As redes sociais deveriam gerar pertencimento, mas hoje geram dependência. Estamos perdendo a capacidade de estar presentes."}
+            title={"A Mente Adoece"}
+            description={"Antes de mudar as plataformas, precisamos mudar nossa relação com elas. A +Creator está construindo uma comunidade para quem acredita que criar é um ato humano, profundo e inspirador."}
             imageSrc="/images/home/mind-photo-1024.webp"
           />
         </div>
       </section>
+    
 
       {/* Parallax 2 - Quanto tempo de vida te resta? */}
   <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-4 md:px-6 overflow-hidden" style={{ zIndex: 0 }}>
@@ -557,23 +558,12 @@ function StickyHero() {
           <div className="text-center px-6 max-w-5xl">
             <h1 className="text-hero text-background mb-6">{"Menos ruído, mais presença."}</h1>
             <h2 className="text-2xl md:text-3xl text-background/90 font-light mb-12 max-w-3xl mx-auto">
-              {"Antes de mudar as plataformas, precisamos mudar nossa relação com elas. O movimento para quem acredita que criar é um ato humano, profundo e inspirador."}
+              {"Chega de aceitar sistemas que recompensam \"fast-foods\" mentais e que punem a criação genuína. O movimento +Creator é a linha de frente para lutar de volta. Juntos."}
             </h2>
           </div>
         </div>
 
-        {/* Stage 2: Diagnóstico */}
-        <div
-          className="absolute inset-0 flex items-center justify-center pointer-events-none z-20"
-          style={{ opacity: s2Opacity, transform: `translateY(${s2Y}px)` }}
-        >
-          <div className="text-center px-6 max-w-5xl">
-            <h2 className="text-4xl md:text-5xl font-bold text-background mb-6">{"O Dilema do Celular."}</h2>
-            <p className="text-xl md:text-2xl text-background/90 font-light max-w-3xl mx-auto">
-              {"Vivemos o estresse mental causado pela dualidade: ferramenta de informação versus inimigo do equilíbrio. O excesso de tela gera solidão conectada e apatia."}
-            </p>
-          </div>
-        </div>
+        {/* Stage 2 removido: header secundário ocultado na LP */}
 
         {/* Scroll Indicator */}
         <motion.div

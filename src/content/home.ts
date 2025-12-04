@@ -52,7 +52,7 @@ export const homeCopy: HomeCopy = {
     },
   },
   turningPoint: {
-    transient: "Se o sistema premia a distração, nós premiamos o propósito.",
+    transient: "Se o sistema premia a falta de foco, nossa comunidade te ajuda a retomá-lo",
     weAre: "Nós somos o +Creator.",
     paragraph:
       "Somos um grupo de jovens que se cansou de esperar e decidiu construir o futuro.",

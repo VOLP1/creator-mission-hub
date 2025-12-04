@@ -32,7 +32,7 @@ export const Navbar = () => {
 
   const navLinks = [
     { name: "Home", path: "/" },
-    { name: "O Problema", path: "/alarme" },
+    // { name: "O Problema", path: "/alarme" }, // Página oculta
     { name: "Manifesto", path: "/quem-somos" },
   ];
 
