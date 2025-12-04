@@ -17,6 +17,7 @@ import Fundadores from "./pages/Fundadores";
 import Assembleia from "./pages/Assembleia";
 import InfluIA from "./pages/InfluIA";
 import Quiz from "./pages/Quiz";
+import Calculadora from "./pages/Calculadora";
 import { Dialog } from "@/components/ui/dialog";
 import ManifestoSignModal from "@/components/modals/ManifestoSignModal";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
@@ -44,6 +45,7 @@ const App = () => {
             <Route path="/influ-ia" element={<InfluIA />} />
             <Route path="/fundadores" element={<Fundadores />} />
             <Route path="/quiz" element={<Quiz />} />
+            <Route path="/calculadora" element={<Calculadora />} />
             <Route
               path="/assembleia"
               element={
