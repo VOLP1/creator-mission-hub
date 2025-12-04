@@ -563,18 +563,7 @@ function StickyHero() {
           </div>
         </div>
 
-        {/* Stage 2: Diagnóstico */}
-        <div
-          className="absolute inset-0 flex items-center justify-center pointer-events-none z-20"
-          style={{ opacity: s2Opacity, transform: `translateY(${s2Y}px)` }}
-        >
-          <div className="text-center px-6 max-w-5xl">
-            <h2 className="text-4xl md:text-5xl font-bold text-background mb-6">{"O Dilema do Celular."}</h2>
-            <p className="text-xl md:text-2xl text-background/90 font-light max-w-3xl mx-auto">
-              {"Vivemos o estresse mental causado pela dualidade: ferramenta de informação versus inimigo do equilíbrio. O excesso de tela gera solidão conectada e apatia."}
-            </p>
-          </div>
-        </div>
+        {/* Stage 2 removido: header secundário ocultado na LP */}
 
         {/* Scroll Indicator */}
         <motion.div
