@@ -9,6 +9,7 @@ export type StatItem = {
   year?: number
   sourceName: string
   sourceUrl: string
+  img?: string
   note?: string
 }
 
@@ -25,6 +26,7 @@ export type ProblemMetrics = {
       avgSessionDurationMin?: StatItem
       swipeRatePerMin?: StatItem
       retentionFirst3s?: StatItem
+                        teenDifficulty?: StatItem
     }
     contentVolumePerMinute?: StatItem[]
   }
@@ -114,7 +116,7 @@ export const problemMetrics: ProblemMetrics = {
         sourceUrl: 'https://blog.hubspot.com/marketing/video-marketing-statistics',
       },
       // Adicionei este dado, que é forte
-      retentionFirst3s: { // Renomeado para 'teen-difficulty'
+                        teenDifficulty: {
         id: 'teen-difficulty',
         label: 'Dos adolescentes acham difícil largar redes',
         value: 54, // Dado real
@@ -189,7 +191,7 @@ img: 'https://images.unsplash.com/photo-1621451537084-482c73073a0f?w=800&q=80',
         id: 'waste-global',
         label: 'Resíduos sólidos urbanos (global)',
         value: 2010, // Dado real: 2.01 Bilhões de ton.
-iMmg: 'https://images.unsplash.com/photo-1621451537084-482c73073a0f?w=800&q=80',
+                                img: 'https://images.unsplash.com/photo-1621451537084-482c73073a0f?w=800&q=80',
         unit: 'Mt/ano',
         year: 2020,
         sourceName: 'World Bank — What a Waste 2.0',

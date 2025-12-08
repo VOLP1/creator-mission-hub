@@ -5,10 +5,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Slider } from "@/components/ui/slider";
 import { ArrowDownRight, ChevronDown, Quote, Rocket, ShieldCheck, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Heading } from "@/components/ui/heading";
 
-type QuemSomosProps = {
-  onOpenManifesto?: () => void;
-};
 
 // Small helper for smooth reveal
 const fadeUp = {
@@ -18,7 +16,8 @@ const fadeUp = {
   transition: { duration: 0.7 },
 };
 
-export default function QuemSomos({ onOpenManifesto }: QuemSomosProps) {
+// Removido onOpenManifesto: estratégia atual não usa mais fluxo de assinatura interna.
+export default function QuemSomos({ onOpenManifesto }: { onOpenManifesto?: () => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] });
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 20, mass: 0.3 });
@@ -47,24 +46,31 @@ export default function QuemSomos({ onOpenManifesto }: QuemSomosProps) {
       {/* Hero */}
       <section className="relative min-h-[80vh] flex items-center">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(60%_40%_at_50%_0%,hsl(var(--primary)/0.12),transparent_60%)]" />
-        <div className="container mx-auto px-6 max-w-5xl">
-          <motion.p style={{ opacity: headerOpacity }} className="mb-3 text-sm uppercase tracking-widest text-primary">
+        <div className="container mx-auto px-4 md:px-6 max-w-5xl">
+          <motion.p style={{ opacity: headerOpacity }} className="mb-3 text-sm uppercase tracking-widest text-primary font-poppins">
             O Manifesto +Creator
           </motion.p>
-          <motion.h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+          {/* Reduced mobile font size to prevent overflow */}
+          <motion.h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight mb-6">
             Uma página viva, não sobre quem somos, mas sobre o que defendemos.
           </motion.h1>
           <motion.p className="text-lg md:text-xl text-muted-foreground max-w-3xl">
             Este é um convite para sentir, questionar e agir. Role com calma. Leia com presença. No fim, assine apenas se fizer sentido para você.
           </motion.p>
 
-          <div className="mt-10 flex flex-wrap gap-4">
-            <Button size="lg" className="px-6" onClick={onOpenManifesto}>
-              Assinar o Manifesto
+          <div className="mt-10 flex flex-col sm:flex-row sm:flex-wrap gap-4 items-start sm:items-center">
+            <Button size="lg" asChild className="px-6 w-full sm:w-auto bg-primary shadow-glow hover:bg-primary/90">
+              <a href="https://wa.me/55XXXXXXXXXX" target="_blank" rel="noopener noreferrer">Entrar na Comunidade</a>
             </Button>
-            <a href="#manifesto" className="inline-flex items-center gap-2 text-primary hover:underline">
+            <a href="#manifesto" className="inline-flex items-center gap-2 text-primary hover:underline text-sm sm:text-base">
               Ler o manifesto <ArrowDownRight className="w-4 h-4" />
             </a>
+            {/* Optional inline CTA to open the manifesto modal when parent provides handler */}
+            {onOpenManifesto && (
+              <button onClick={onOpenManifesto} className="text-sm text-primary underline">
+                Assinar agora
+              </button>
+            )}
           </div>
           <ScrollHint />
         </div>
@@ -74,7 +80,7 @@ export default function QuemSomos({ onOpenManifesto }: QuemSomosProps) {
 
       {/* Scrollytelling manifesto */}
       <section id="manifesto" className="py-10 md:py-20">
-        <div className="container mx-auto px-6 max-w-4xl space-y-24">
+        <div className="container mx-auto px-4 md:px-6 max-w-4xl space-y-24">
           <ManifestoBlock
             title="O que é a essência de criar conteúdo?"
             paragraphs={[
@@ -149,9 +155,9 @@ export default function QuemSomos({ onOpenManifesto }: QuemSomosProps) {
 
           <QASection />
 
-          <PledgeSection onOpenManifesto={onOpenManifesto} />
+          <PledgeSection />
 
-          <CalloutAction onOpenManifesto={onOpenManifesto} />
+          <CalloutAction />
         </div>
       </section>
     </div>
@@ -160,7 +166,7 @@ export default function QuemSomos({ onOpenManifesto }: QuemSomosProps) {
 
 function ScrollHint() {
   return (
-    <a href="#manifesto" className="group absolute left-1/2 -translate-x-1/2 bottom-8 md:bottom-14 inline-flex flex-col items-center gap-2 text-primary/90">
+    <a href="#manifesto" className="hidden sm:inline-flex group absolute left-1/2 -translate-x-1/2 bottom-8 md:bottom-14 flex-col items-center gap-2 text-primary/90">
       <span className="text-xs uppercase tracking-widest opacity-80">Role para ler</span>
       <motion.span
         aria-hidden
@@ -177,16 +183,31 @@ function ScrollHint() {
 function ManifestoBlock({ title, paragraphs, accent, icon }: { title: string; paragraphs: string[]; accent?: boolean; icon?: React.ReactNode }) {
   return (
     <div className={`rounded-3xl border ${accent ? "bg-primary/5 border-primary/20" : "bg-card border-border"} p-6 md:p-10 shadow-sm`}>
-      <motion.h2 {...fadeUp as any} className="text-2xl md:text-4xl font-bold flex items-center gap-3">
-        {icon}
-        <span>{title}</span>
-      </motion.h2>
+      <motion.div {...fadeUp as any}>
+        <Heading as="h2" variant="section" className="flex items-center gap-3 mb-4">
+          {icon}
+          <span>{title}</span>
+        </Heading>
+      </motion.div>
       <div className="mt-5 space-y-4">
-        {paragraphs.map((p, i) => (
-          <motion.p key={i} {...fadeUp as any} transition={{ duration: 0.6, delay: i * 0.05 }} className="text-base md:text-lg text-muted-foreground leading-relaxed">
-            {p}
-          </motion.p>
-        ))}
+        {paragraphs.map((p, i) => {
+          // Automatically render '+Creator' with Poppins font when present
+          const parts = p.split("+Creator");
+          return (
+            <motion.p key={i} {...(fadeUp as any)} transition={{ duration: 0.6, delay: i * 0.05 }} className="text-base md:text-lg text-muted-foreground leading-relaxed">
+              {parts.map((part, idx) => (
+                idx === 0 ? (
+                  part
+                ) : (
+                  <span key={`${i}-${idx}`}>
+                    <span className="font-poppins">+Creator</span>
+                    {part}
+                  </span>
+                )
+              ))}
+            </motion.p>
+          );
+        })}
       </div>
     </div>
   );
@@ -194,9 +215,12 @@ function ManifestoBlock({ title, paragraphs, accent, icon }: { title: string; pa
 
 function ManifestoQuote({ quote }: { quote: string }) {
   return (
-    <motion.blockquote {...fadeUp as any} className="relative p-8 md:p-12 rounded-3xl border bg-muted/30">
-      <Quote className="absolute -top-4 -left-4 w-10 h-10 text-primary/30" />
-      <p className="text-2xl md:text-3xl font-semibold leading-snug">{quote}</p>
+    <motion.blockquote {...fadeUp as any} className="relative p-8 md:p-12 rounded-3xl border bg-muted/30 overflow-hidden">
+      {/* Avoid negative offsets on mobile to prevent horizontal scroll */}
+      <Quote className="absolute top-2 left-2 md:-top-4 md:-left-4 w-8 h-8 md:w-10 md:h-10 text-primary/30" />
+      <Heading as="h3" variant="sub" className="font-semibold leading-snug no-underline text-foreground">
+        {quote}
+      </Heading>
     </motion.blockquote>
   );
 }
@@ -225,9 +249,11 @@ function Marquee({ text }: { text: string }) {
 function StepsBlock({ title, steps }: { title: string; steps: { title: string; desc: string }[] }) {
   return (
     <div className="rounded-3xl border bg-card p-6 md:p-10">
-      <motion.h3 {...fadeUp as any} className="text-xl md:text-2xl font-semibold mb-6">
-        {title}
-      </motion.h3>
+      <motion.div {...fadeUp as any}>
+        <Heading as="h3" variant="sub" className="mb-6 font-semibold">
+          {title}
+        </Heading>
+      </motion.div>
       <div className="grid md:grid-cols-3 gap-6">
         {steps.map((s, i) => (
           <motion.div key={s.title} {...fadeUp as any} transition={{ duration: 0.5, delay: i * 0.05 }} className="rounded-2xl border bg-background p-5">
@@ -244,9 +270,11 @@ function StepsBlock({ title, steps }: { title: string; steps: { title: string; d
 function TwoColBlock({ title, body, bullets }: { title: string; body: string; bullets: string[] }) {
   return (
     <div className="rounded-3xl border bg-card p-6 md:p-10">
-      <motion.h3 {...fadeUp as any} className="text-2xl md:text-3xl font-bold mb-6 flex items-center gap-2">
-        <Rocket className="w-6 h-6 text-primary" /> {title}
-      </motion.h3>
+      <motion.div {...fadeUp as any}>
+        <Heading as="h3" variant="section" className="mb-6 flex items-center gap-2">
+          <Rocket className="w-6 h-6 text-primary" /> {title}
+        </Heading>
+      </motion.div>
       <div className="grid md:grid-cols-5 gap-6 items-start">
         <motion.p {...fadeUp as any} className="md:col-span-3 text-muted-foreground leading-relaxed">
           {body}
@@ -264,17 +292,21 @@ function TwoColBlock({ title, body, bullets }: { title: string; body: string; bu
   );
 }
 
-function CalloutAction({ onOpenManifesto }: { onOpenManifesto?: () => void }) {
+function CalloutAction() {
   return (
     <div className="rounded-3xl border bg-gradient-to-br from-primary/10 via-transparent to-primary/5 p-6 md:p-10 text-center">
-      <motion.h3 {...fadeUp as any} className="text-2xl md:text-4xl font-extrabold">
-        Não queremos viralizar. Queremos regenerar.
-      </motion.h3>
+      <motion.div {...fadeUp as any}>
+        <Heading as="h3" variant="section" className="font-extrabold">
+          Não queremos viralizar. Queremos regenerar.
+        </Heading>
+      </motion.div>
       <motion.p {...fadeUp as any} className="mt-4 text-muted-foreground max-w-2xl mx-auto">
         Começamos com uma Ação de Lançamento: uma limpeza física real, bancada por nós, para provar nosso caráter. Depois, lançaremos o crowdfunding para financiar a Influ.IA e ajudar a limpar o digital.
       </motion.p>
       <div className="mt-8 flex flex-wrap justify-center gap-4">
-        <Button size="lg" onClick={onOpenManifesto}>Assinar o Manifesto</Button>
+        <Button size="lg" asChild className="bg-primary shadow-glow hover:bg-primary/90">
+          <a href="https://wa.me/55XXXXXXXXXX" target="_blank" rel="noopener noreferrer">Entrar na Comunidade</a>
+        </Button>
         <Link to="/projetos">
           <Button size="lg" variant="outline">Participar da Limpeza</Button>
         </Link>
@@ -286,9 +318,11 @@ function CalloutAction({ onOpenManifesto }: { onOpenManifesto?: () => void }) {
 function QASection() {
   return (
     <div className="rounded-3xl border bg-card p-6 md:p-10">
-      <motion.h3 {...fadeUp as any} className="text-2xl md:text-3xl font-bold mb-4">
-        Perguntas que importam
-      </motion.h3>
+      <motion.div {...fadeUp as any}>
+        <Heading as="h3" variant="section" className="mb-4">
+          Perguntas que importam
+        </Heading>
+      </motion.div>
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value="q1">
           <AccordionTrigger>Onde está o conteúdo? Pra onde foi a conexão humana?</AccordionTrigger>
@@ -313,7 +347,7 @@ function QASection() {
   );
 }
 
-function PledgeSection({ onOpenManifesto }: { onOpenManifesto?: () => void }) {
+function PledgeSection() {
   const [value, setValue] = useState<number>(0);
   const unlocked = value >= 100;
   return (
@@ -328,9 +362,13 @@ function PledgeSection({ onOpenManifesto }: { onOpenManifesto?: () => void }) {
         <Slider value={[value]} max={100} step={1} onValueChange={(v) => setValue(v[0] ?? 0)} />
         <div className="mt-2 text-center text-sm text-muted-foreground">{value}%</div>
         <div className="mt-6 text-center">
-          <Button size="lg" disabled={!unlocked} onClick={onOpenManifesto} className={unlocked ? "" : "opacity-60"}>
-            {unlocked ? "Assinar o Manifesto agora" : "Confirme seu compromisso"}
-          </Button>
+          {unlocked ? (
+            <Button size="lg" asChild>
+              <a href="https://wa.me/55XXXXXXXXXX" target="_blank" rel="noopener noreferrer">Entrar na Comunidade</a>
+            </Button>
+          ) : (
+            <Button size="lg" disabled className="opacity-60">Confirme seu compromisso</Button>
+          )}
         </div>
       </div>
     </div>

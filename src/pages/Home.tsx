@@ -3,6 +3,8 @@ import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Target, Users, Megaphone } from "lucide-react";
 import { Link } from "react-router-dom";
+import { homeCopy } from "@/content/home";
+import { Heading } from "@/components/ui/heading";
 
 export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void }) {
   const surgirRef = useRef<HTMLDivElement>(null);
@@ -55,77 +57,55 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
 
   return (
     <div className="min-h-screen overflow-x-hidden">
-      {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden bg-[hsl(var(--alarm))]">
-        {/* Video Background Placeholder */}
-        <div className="absolute inset-0 bg-gradient-tension opacity-90" />
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80')] bg-cover bg-center opacity-20" />
+      {/* Hero Section - sticky with two stages (gancho -> diagnóstico) */}
+      <StickyHero />
 
-        {/* Content */}
-        <div className="relative z-10 text-center px-6 max-w-5xl">
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.3 }}
-            className="text-hero text-background mb-6"
-          >
-            O Herói é Você.
-          </motion.h1>
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.6 }}
-            className="text-2xl md:text-3xl text-background/90 font-light mb-12 max-w-3xl mx-auto"
-          >
-            O herói é quem decide sair da zona de conforto e agir. Nós somos o
-            mentor, mas VOCÊ é a força da mudança.
-          </motion.h2>
-
-          {/* Scroll Indicator */}
-          <motion.div
-            animate={{ y: [120, 130, 120] }}
-            transition={{ repeat: Infinity, duration: 3 }}
-            className="absolute bottom-12 left-1/2 -translate-x-1/2"
-          >
-            <ChevronDown className="w-8 h-8 text-background opacity-60" />
-          </motion.div>
-        </div>
-      </section>
-
-      {/* O Problema - Lixo Digital */}
-      <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-6 overflow-hidden" style={{ zIndex: 0 }}>
-        <ParallaxBackground imageSrc="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1920&q=80" />
+      {/* Parallax 1 - A Apatia Digital */}
+  <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-4 md:px-6 overflow-hidden" style={{ zIndex: 0 }}>
+  <ParallaxBackground imageSrc="/images/home/mind-bg-1600.avif" priority="eager" />
         <div className="container mx-auto relative z-10">
           <TensionSection
-            title="Estamos viciados em Lixo Digital."
-            description="O 'fast-food' mental. Conteúdo viciante e sem valor que gera ansiedade. Os algoritmos recompensam o choque, não a criatividade."
-            imageSrc="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&q=80"
+            title={"A Apatia Digital"}
+            description={"As redes sociais deveriam gerar pertencimento, mas hoje geram dependência. Estamos perdendo a capacidade de estar presentes."}
+            imageSrc="/images/home/mind-photo-1024.webp"
           />
         </div>
       </section>
 
-      {/* O Problema - Lixo Físico */}
-      <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-6 overflow-hidden" style={{ zIndex: 0 }}>
-        <ParallaxBackground imageSrc="https://images.unsplash.com/photo-1621451537084-482c73073a0f?w=1920&q=80" />
+      {/* Parallax 2 - Quanto tempo de vida te resta? */}
+  <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-4 md:px-6 overflow-hidden" style={{ zIndex: 0 }}>
+  <ParallaxBackground imageSrc="/images/home/sessao2fotogrande-1600.avif" />
         <div className="container mx-auto relative z-10">
           <TensionSection
-            title="E apáticos ao Lixo Físico."
-            description="A desconexão digital nos torna indiferentes ao mundo real. Nossas ruas e praças estão pagando o preço."
-            imageSrc="https://images.unsplash.com/photo-1621451537084-482c73073a0f?w=800&q=80"
+            title={"Quanto tempo de vida te resta?"}
+            description={"Você já calculou quantos anos de vida reais você vai perder olhando para uma tela se continuar nesse ritmo? A matemática assusta."}
+            imageSrc="/images/home/sessao2fotopequena-1024.avif"
             reverse
           />
+          {/* Ação: Botão para Calculadora */}
+          <div className="mt-8 md:mt-12">
+            <Button asChild>
+              <Link to="/calculadora">Calcular meu Tempo Perdido</Link>
+            </Button>
+          </div>
         </div>
       </section>
 
-      {/* O Problema - Criadores Exaustos */}
-      <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-6 overflow-hidden" style={{ zIndex: 0 }}>
-        <ParallaxBackground imageSrc="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1920&q=80" />
+      {/* Parallax 3 - Qual é o seu Arquétipo Digital? */}
+  <section className="relative min-h-screen bg-[hsl(var(--alarm))] py-32 px-4 md:px-6 overflow-hidden" style={{ zIndex: 0 }}>
+  <ParallaxBackground imageSrc="/images/home/sessao3fotogrande-1600.avif" />
         <div className="container mx-auto relative z-10">
           <TensionSection
-            title="Os bons criadores estão desistindo."
-            description="O sistema força os bons a escolherem: fazer polêmica ou desaparecer."
-            imageSrc="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&q=80"
+            title={"Qual é o seu Arquétipo Digital?"}
+            description={"Você está no comando ou no piloto automático? Faça o teste para identificar os padrões que ditam seu uso e receba o plano ideal para o seu perfil."}
+            imageSrc="/images/home/sessao3fotopequena-1024.avif"
           />
+          {/* Ação: Botão para Quiz */}
+          <div className="mt-8 md:mt-12">
+            <Button asChild>
+              <Link to="/quiz">Descobrir meu Arquétipo</Link>
+            </Button>
+          </div>
         </div>
       </section>
 
@@ -193,7 +173,7 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
                 className="text-section-title text-foreground"
                 style={{ textAlign: 'center' }}
               >
-                Nós somos o +Creator.
+                {homeCopy.turningPoint.weAre}
               </motion.h2>
 
               {/* Texto que entra pela direita */}
@@ -204,8 +184,7 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
                 className="text-xl md:text-2xl text-muted-foreground max-w-3xl"
                 style={{ textAlign: 'center' }}
               >
-                Somos um grupo de jovens que se cansou de esperar e decidiu
-                construir o futuro.
+                {homeCopy.turningPoint.paragraph}
               </motion.p>
 
               {/* Foto que entra de baixo */}
@@ -215,13 +194,19 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
                 transition={{ duration: 0.8, delay: 0.4, ease: 'easeOut' }}
                 className="relative w-full max-w-4xl h-[40vh] rounded-2xl overflow-hidden shadow-cinematic"
               >
-                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80')] bg-cover bg-center" />
+                <img
+                  src="/images/home/surgir-photo-1600.avif"
+                  alt="Colaboração de pessoas"
+                  className="absolute inset-0 w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
               </motion.div>
             </div>
           )}
 
-          {/* Texto "mas existe uma solução" que desaparece */}
+          {/* Texto de transição que desaparece */}
           <h1 
             style={{ 
               position: 'relative', 
@@ -234,7 +219,7 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
             }} 
             className="text-hero"
           >
-            ...mas existe uma solução!
+            {homeCopy.turningPoint.transient}
           </h1>
         </div>
       </div>
@@ -245,29 +230,29 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
       <div className="block md:hidden">
         <MissionCardFullScreen
           icon={Megaphone}
-          title="Conscientizar"
-          description="Mostramos a realidade do lixo digital e físico com dados e histórias reais."
-          bgImage="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&q=80"
+          title="Educar"
+          description="Dicas práticas para desintoxicar sua relação com as redes."
+          bgImage="/images/home/mission-awareness-1600.avif"
           accentColor="hsl(var(--alarm))"
         />
         <MissionCardFullScreen
           icon={Users}
           title="Unir"
           description="Conectamos criadores, ativistas e pessoas que querem mudança."
-          bgImage="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1200&q=80"
+          bgImage="/images/home/mission-unite-1600.avif"
           accentColor="hsl(var(--secondary))"
         />
         <MissionCardFullScreen
           icon={Target}
           title="Apoiar"
           description="Endossamos e promovemos projetos que são soluções reais."
-          bgImage="https://images.unsplash.com/photo-1526666923127-b2970f64b422?w=1200&q=80"
+          bgImage="/images/home/mission-support-1600.avif"
           accentColor="hsl(var(--primary))"
         />
       </div>
 
       {/* DESKTOP: Bento Box Style */}
-      <section className="hidden md:block py-20 px-6 bg-background">
+  <section className="hidden md:block py-20 px-6 bg-background">
         <div className="container mx-auto">
           {/* Bento Grid */}
           <div className="grid grid-cols-2 gap-6 max-w-6xl mx-auto" style={{ gridTemplateRows: 'auto auto' }}>
@@ -282,15 +267,20 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
               style={{ minHeight: '600px' }}
             >
               {/* Background */}
-              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&q=80')] bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-700" />
+              <CoverImage
+                src="/images/home/mission-awareness-1600.avif"
+                alt="Megafone"
+                className="grayscale group-hover:grayscale-0 transition-all duration-700"
+                fetchPriority="low"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/30" />
               
               {/* Content */}
               <div className="relative z-10 p-12 h-full flex flex-col justify-end">
                 <Megaphone className="w-16 h-16 text-primary mb-6" />
-                <h3 className="text-5xl font-bold text-background mb-4">Conscientizar</h3>
+                <h3 className="text-5xl font-bold text-background mb-4">Educar</h3>
                 <p className="text-xl text-background/90 max-w-md">
-                  Mostramos a realidade do lixo digital e físico com dados e histórias reais.
+                  Dicas práticas para desintoxicar sua relação com as redes.
                 </p>
               </div>
             </motion.div>
@@ -305,15 +295,20 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
               style={{ minHeight: '290px' }}
             >
               {/* Background */}
-              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1200&q=80')] bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-700" />
+              <CoverImage
+                src="/images/home/mission-unite-1600.avif"
+                alt="Pessoas unidas"
+                className="grayscale group-hover:grayscale-0 transition-all duration-700"
+                fetchPriority="low"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--secondary))] via-[hsl(var(--secondary))]/80 to-[hsl(var(--secondary))]/40" />
               
               {/* Content */}
               <div className="relative z-10 p-8 h-full flex flex-col justify-end">
                 <Users className="w-12 h-12 text-background mb-4" />
-                <h3 className="text-3xl font-bold text-background mb-2">Unir</h3>
+                <h3 className="text-3xl font-bold text-background mb-2">Conectar</h3>
                 <p className="text-lg text-background/90">
-                  Conectamos criadores, ativistas e pessoas que querem mudança.
+                  Ações de comunidade que unem as pessoas em uma jornada emocional.
                 </p>
               </div>
             </motion.div>
@@ -328,15 +323,20 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
               style={{ minHeight: '290px' }}
             >
               {/* Background */}
-              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1526666923127-b2970f64b422?w=1200&q=80')] bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-700" />
+              <CoverImage
+                src="/images/home/mission-support-1600.avif"
+                alt="Alvo de foco"
+                className="grayscale group-hover:grayscale-0 transition-all duration-700"
+                fetchPriority="low"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--primary))] via-[hsl(var(--primary))]/80 to-[hsl(var(--primary))]/40" />
               
               {/* Content */}
               <div className="relative z-10 p-8 h-full flex flex-col justify-end">
                 <Target className="w-12 h-12 text-background mb-4" />
-                <h3 className="text-3xl font-bold text-background mb-2">Apoiar</h3>
+                <h3 className="text-3xl font-bold text-background mb-2">Mobilizar</h3>
                 <p className="text-lg text-background/90">
-                  Endossamos e promovemos projetos que são soluções reais.
+                  Tornar-se um símbolo cultural da luta pela saúde mental no digital.
                 </p>
               </div>
             </motion.div>
@@ -345,8 +345,8 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
         </div>
       </section>
 
-      {/* A Missão */}
-      <section className="py-32 px-6 bg-secondary">
+      {/* A Missão - WhatsApp CTA */}
+      <section className="py-32 px-4 md:px-6 bg-secondary">
         <div className="container mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -355,32 +355,21 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
             viewport={{ once: true }}
             className="max-w-4xl mx-auto"
           >
-            <h2 className="text-section-title text-secondary-foreground mb-8">
-              Nossa Primeira Missão: Apoiamos a Solução Real.
-            </h2>
-            <p className="text-xl text-secondary-foreground/90 mb-12">
-              Endossamos o crowdfunding da Influ.IA, uma ferramenta que
-              acreditamos ser a solução real para o lixo digital, pois liberta
-              os criadores para criarem com alma.
+            <Heading as="h2" variant="section" className="text-secondary-foreground mb-8">
+              Quer dar o primeiro passo?
+            </Heading>
+            <p className="text-xl text-secondary-foreground/90 mb-6">
+              Na comunidade +Creator você encontra recursos para melhorar sua relação com as redes e se conecta com pessoas que buscam o mesmo.
             </p>
 
-            <div className="bg-secondary-foreground/10 backdrop-blur-sm rounded-2xl p-12 mb-12">
-              <h3 className="text-3xl md:text-4xl font-bold text-secondary-foreground mb-6">
-                E o seu apoio tem impacto duplo:
-              </h3>
-              <div className="flex flex-col md:flex-row items-center justify-center gap-8 text-secondary-foreground">
-                <CounterDisplay value={100} prefix="R$" />
-                <span className="text-4xl">=</span>
-                <CounterDisplay value={1} suffix="kg de lixo removido" />
-              </div>
-            </div>
+            {/* Destaque */}
+            <p className="text-2xl font-semibold text-secondary-foreground/90 mb-12">
+              Sua qualidade de vida começa agora.
+            </p>
 
-            <Button
-              size="lg"
-              onClick={() => onOpenManifesto && onOpenManifesto()}
-              className="bg-primary hover:bg-primary/90 text-primary-foreground text-xl px-12 py-6 shadow-glow hover:scale-105 transition-all"
-            >
-              Assine o Manifesto
+            {/* Botão Principal - WhatsApp */}
+            <Button asChild size="lg" className="text-base md:text-xl px-8 md:px-12 py-6 shadow-glow">
+              <a href="https://wa.me/55..." target="_blank" rel="noopener noreferrer">Entrar no Grupo do WhatsApp</a>
             </Button>
           </motion.div>
         </div>
@@ -395,7 +384,7 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
         >
           {/* Background com Parallax */}
           <div className="absolute inset-0">
-            <ParallaxBackground imageSrc="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1920&q=80" />
+            <ParallaxBackground imageSrc="/images/home/deep-dive-report-1600.avif" />
           </div>
           
           {/* Overlay escuro que clareia no hover */}
@@ -405,7 +394,7 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
           <div className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--alarm))]/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700" />
 
           {/* Conteúdo */}
-          <div className="relative z-10 h-full flex flex-col items-center justify-center px-8 md:px-16">
+          <div className="relative z-10 h-full flex flex-col items-center justify-center px-8 md:px-16 pb-16">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -425,14 +414,14 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
               {/* Botão */}
               <Button
                 size="lg"
-                className="bg-[hsl(var(--alarm))] hover:bg-[hsl(var(--alarm))]/90 text-background text-xl px-12 py-6 shadow-glow opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
+                className="bg-[hsl(var(--alarm))] hover:bg-[hsl(var(--alarm))]/90 text-background text-base px-6 py-4 md:text-xl md:px-12 md:py-6 shadow-glow opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
               >
                 Veja o Relatório Completo
               </Button>
             </motion.div>
 
             {/* Indicador de hover */}
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-background/60 group-hover:text-background transition-all duration-700">
+            <div className="hidden md:block absolute bottom-8 left-1/2 -translate-x-1/2 text-background/60 group-hover:text-background transition-all duration-700">
               <p className="text-sm uppercase tracking-wider">Clique para explorar</p>
             </div>
           </div>
@@ -448,7 +437,7 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
         >
           {/* Background com Parallax */}
           <div className="absolute inset-0">
-            <ParallaxBackground imageSrc="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1920&q=80" />
+            <ParallaxBackground imageSrc="/images/home/deep-dive-manifesto-1600.avif" />
           </div>
           
           {/* Overlay escuro que clareia no hover */}
@@ -458,7 +447,7 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
           <div className="absolute inset-0 bg-gradient-to-bl from-[hsl(var(--primary))]/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700" />
 
           {/* Conteúdo */}
-          <div className="relative z-10 h-full flex flex-col items-center justify-center px-8 md:px-16">
+          <div className="relative z-10 h-full flex flex-col items-center justify-center px-8 md:px-16 pb-16">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -478,14 +467,14 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
               {/* Botão */}
               <Button
                 size="lg"
-                className="bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))]/90 text-primary-foreground text-xl px-12 py-6 shadow-glow opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
+                className="bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))]/90 text-primary-foreground text-base px-6 py-4 md:text-xl md:px-12 md:py-6 shadow-glow opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
               >
                 Leia nosso Manifesto
               </Button>
             </motion.div>
 
             {/* Indicador de hover */}
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-background/60 group-hover:text-background transition-all duration-700">
+            <div className="hidden md:block absolute bottom-8 left-1/2 -translate-x-1/2 text-background/60 group-hover:text-background transition-all duration-700">
               <p className="text-sm uppercase tracking-wider">Clique para explorar</p>
             </div>
           </div>
@@ -496,6 +485,110 @@ export default function Home({ onOpenManifesto }: { onOpenManifesto?: () => void
 }
 
 // Helper Components
+function StickyHero() {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const [sectionState, setSectionState] = useState<'before' | 'sticky' | 'after'>('before');
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (!heroRef.current) return;
+      const rect = heroRef.current.getBoundingClientRect();
+      const sectionTop = rect.top;
+      const sectionHeight = rect.height;
+      const windowHeight = window.innerHeight;
+
+      if (sectionTop > 0) {
+        setSectionState('before');
+        setProgress(0);
+      } else if (sectionTop <= 0 && sectionTop + sectionHeight > windowHeight) {
+        setSectionState('sticky');
+        const scrolled = Math.abs(sectionTop);
+        const totalScroll = Math.max(1, sectionHeight - windowHeight);
+        const p = Math.min(Math.max(scrolled / totalScroll, 0), 1);
+        setProgress(p);
+      } else {
+        setSectionState('after');
+        setProgress(1);
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // Opacity/translate curves to avoid overlap and blanks
+  // Faster, snappier transition for mobile: smaller overlap window
+  const s1Opacity = progress < 0.3 ? 1 : progress < 0.45 ? 1 - (progress - 0.3) / 0.15 : 0;
+  const s2Opacity = progress < 0.35 ? 0 : progress < 0.5 ? (progress - 0.35) / 0.15 : 1;
+  const s1Y = progress * -80; // stronger lift out
+  const s2Y = (1 - Math.min(1, Math.max(0, (progress - 0.35) / 0.15))) * 60; // faster rise in
+
+  return (
+  <div ref={heroRef} className="relative" style={{ height: '150vh' }}>
+      <div
+        className="relative"
+        style={{
+          position: sectionState === 'before' ? 'relative' : sectionState === 'sticky' ? 'fixed' : 'absolute',
+          top: sectionState === 'sticky' ? 0 : 'auto',
+          bottom: sectionState === 'after' ? 0 : 'auto',
+          left: 0,
+          right: 0,
+          height: '100vh',
+          overflow: 'hidden',
+          zIndex: 5,
+        }}
+      >
+        {/* Backgrounds */}
+        <div className="absolute inset-0 bg-gradient-tension opacity-90 z-0" />
+        <CoverImage
+          src="/images/home/hero-bg.jpg"
+          alt="Plano de fundo"
+          className="opacity-20 z-0"
+          fetchPriority="low"
+        />
+        <div className="absolute inset-0 bg-black/35 z-0" />
+
+        {/* Stage 1: Gancho */}
+        <div
+          className="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
+          style={{ opacity: s1Opacity, transform: `translateY(${s1Y}px)` }}
+        >
+          <div className="text-center px-6 max-w-5xl">
+            <h1 className="text-hero text-background mb-6">{"Menos ruído, mais presença."}</h1>
+            <h2 className="text-2xl md:text-3xl text-background/90 font-light mb-12 max-w-3xl mx-auto">
+              {"Antes de mudar as plataformas, precisamos mudar nossa relação com elas. O movimento para quem acredita que criar é um ato humano, profundo e inspirador."}
+            </h2>
+          </div>
+        </div>
+
+        {/* Stage 2: Diagnóstico */}
+        <div
+          className="absolute inset-0 flex items-center justify-center pointer-events-none z-20"
+          style={{ opacity: s2Opacity, transform: `translateY(${s2Y}px)` }}
+        >
+          <div className="text-center px-6 max-w-5xl">
+            <h2 className="text-4xl md:text-5xl font-bold text-background mb-6">{"O Dilema do Celular."}</h2>
+            <p className="text-xl md:text-2xl text-background/90 font-light max-w-3xl mx-auto">
+              {"Vivemos o estresse mental causado pela dualidade: ferramenta de informação versus inimigo do equilíbrio. O excesso de tela gera solidão conectada e apatia."}
+            </p>
+          </div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <motion.div
+          animate={{ y: [120, 130, 120] }}
+          transition={{ repeat: Infinity, duration: 3 }}
+          className="absolute bottom-12 left-1/2 -translate-x-1/2"
+          aria-hidden
+        >
+          <ChevronDown className="w-8 h-8 text-background opacity-60" />
+        </motion.div>
+      </div>
+    </div>
+  );
+}
+
 function TensionSection({
   title,
   description,
@@ -533,6 +626,8 @@ function TensionSection({
           src={imageSrc}
           alt={title}
           className="w-full h-full object-cover grayscale"
+          loading="lazy"
+          decoding="async"
         />
       </div>
     </motion.div>
@@ -613,29 +708,69 @@ function DeepDiveCard({
   );
 }
 
+// CoverImage - absolute cover <img> with sensible defaults for perf
+function CoverImage({
+  src,
+  alt = "",
+  className = "",
+  fetchPriority = "auto",
+}: {
+  src: string;
+  alt?: string;
+  className?: string;
+  fetchPriority?: "high" | "low" | "auto";
+}) {
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className={`absolute inset-0 w-full h-full object-cover ${className}`}
+      loading="lazy"
+      decoding="async"
+      fetchPriority={fetchPriority}
+      style={{ willChange: "transform" }}
+      aria-hidden={alt === ""}
+    />
+  );
+}
+
 // ParallaxBackground - Componente simples de fundo parallax
-function ParallaxBackground({ imageSrc }: { imageSrc: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  
+function ParallaxBackground({ imageSrc, priority = "lazy" }: { imageSrc: string; priority?: "eager" | "lazy" }) {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  // Parallax only when it helps UX: disable for reduced motion or small screens
+  const prefersReduced = typeof window !== 'undefined' && window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false;
+  const isMobile = typeof window !== 'undefined' && window.matchMedia ? window.matchMedia('(max-width: 768px)').matches : false;
+
   const { scrollYProgress } = useScroll({
-    target: ref,
+    target: wrapperRef,
     offset: ["start end", "end start"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
+  // Aumenta parallax no desktop, mantém moderado no mobile e desativa para reduced-motion
+  let parallaxRange: [string, string];
+  if (prefersReduced) {
+    parallaxRange = ["0%", "0%"]; // respeita acessibilidade
+  } else if (isMobile) {
+    parallaxRange = ["-12%", "12%"]; // mobile mais leve para suavidade
+  } else {
+    parallaxRange = ["-25%", "25%"]; // desktop mais forte
+  }
+  const y = useTransform(scrollYProgress, [0, 1], parallaxRange);
 
   return (
-    <motion.div
-      ref={ref}
-      style={{ y }}
-      className="absolute inset-0 w-full h-[120%] -top-[10%]"
-    >
-      <div 
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${imageSrc})` }}
+    <div ref={wrapperRef} className="absolute inset-0 w-full h-[120%] -top-[10%]">
+      <motion.img
+        src={imageSrc}
+        alt=""
+        aria-hidden
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ y, willChange: "transform", transform: 'translateZ(0)' }}
+        loading={priority}
+        decoding="async"
       />
       <div className="absolute inset-0 bg-black/60" />
-    </motion.div>
+    </div>
   );
 }
 

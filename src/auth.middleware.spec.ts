@@ -2,7 +2,7 @@ import { vi, describe, it, expect, beforeEach } from 'vitest'
 import jwt from 'jsonwebtoken'
 import type { Request, Response, NextFunction } from 'express'
 // Import will intentionally fail until middleware is implemented (RED phase)
-import authMiddleware from './auth.middleware'
+import authMiddleware from './auth.middleware.ts'
 
 // Helpers simples para mocks de req/res compatíveis com Vitest
 function getMockReq(overrides: Partial<Request> = {} as any) {

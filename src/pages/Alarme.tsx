@@ -10,7 +10,7 @@ import { problemMetrics, sourcesNote } from "@/data/problem-metrics";
 
 export default function Alarme() {
   return (
-    <div className="min-h-screen pt-20">
+    <div className="min-h-screen pt-20 overflow-x-clip">
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden bg-[hsl(var(--alarm))]">
         <div className="absolute inset-0 bg-gradient-tension">
@@ -28,7 +28,7 @@ export default function Alarme() {
           />
         </div>
 
-        <div className="relative z-10 text-center px-6 max-w-5xl">
+  <div className="relative z-10 text-center px-4 md:px-6 max-w-5xl">
           <motion.h1
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -50,7 +50,7 @@ export default function Alarme() {
       </section>
 
       {/* O Lixo Digital */}
-      <section className="min-h-screen bg-[hsl(var(--alarm))] py-32 px-6">
+  <section className="min-h-screen bg-[hsl(var(--alarm))] py-32 px-4 md:px-6">
         <div className="container mx-auto">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -96,7 +96,7 @@ export default function Alarme() {
       </section>
 
       {/* Depoimentos */}
-      <section className="py-32 px-6 bg-[hsl(var(--alarm))]/90">
+  <section className="py-32 px-4 md:px-6 bg-[hsl(var(--alarm))]/90">
         <div className="container mx-auto">
           <motion.h2
             initial={{ opacity: 0, y: 40 }}
@@ -147,13 +147,13 @@ export default function Alarme() {
       </section>
 
       {/* Evidências (dinâmicas) */}
-      <section className="py-32 px-6 bg-[hsl(var(--alarm))]">
+      <section className="py-32 px-4 md:px-6 bg-[hsl(var(--alarm))]">
         <div className="container mx-auto max-w-6xl">
           <h2 className="text-3xl md:text-4xl font-bold text-background mb-6">O Problema, em dados</h2>
           <p className="text-background/80 mb-8">{sourcesNote}</p>
 
           <Tabs defaultValue="digital" className="w-full">
-            <TabsList>
+            <TabsList className="flex flex-wrap w-full justify-center gap-2">
               <TabsTrigger value="digital">Digital</TabsTrigger>
               <TabsTrigger value="fisico">Físico</TabsTrigger>
             </TabsList>
@@ -278,7 +278,7 @@ export default function Alarme() {
       </section>
 
       {/* Lixo Físico - Parallax Gallery */}
-      <section className="py-32 px-6 bg-[hsl(var(--alarm))]/95">
+  <section className="py-32 px-4 md:px-6 bg-[hsl(var(--alarm))]/95">
         <div className="container mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -336,7 +336,7 @@ export default function Alarme() {
       </section>
 
       {/* CTA Final */}
-      <section className="py-32 px-6 bg-[hsl(var(--alarm))]">
+      <section className="py-32 px-4 md:px-6 bg-[hsl(var(--alarm))]">
         <div className="container mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -355,7 +355,7 @@ export default function Alarme() {
             <Link to="/quem-somos">
               <Button
                 size="lg"
-                className="bg-primary hover:bg-primary/90 text-primary-foreground text-xl px-12 py-6 shadow-glow hover:scale-105 transition-all"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground text-base px-6 py-4 md:text-xl md:px-12 md:py-6 shadow-glow hover:scale-105 transition-all w-full sm:w-auto"
               >
                 Conheça quem está agindo
               </Button>
@@ -389,7 +389,7 @@ function StatCard({
       className="bg-background/10 backdrop-blur-sm p-12 rounded-2xl text-center border border-background/20"
     >
       <Icon className="w-16 h-16 text-primary mx-auto mb-6" />
-      <div className="text-6xl font-bold text-background mb-4">{value}</div>
+  <div className="text-4xl sm:text-5xl md:text-6xl font-bold text-background mb-4">{value}</div>
       <div className="text-xl text-background/80">{label}</div>
     </motion.div>
   );

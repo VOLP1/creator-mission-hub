@@ -4,14 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
 import { Menu } from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
 import { motion } from "framer-motion";
 
+// Estratégia simplificada: removida lógica de autenticação e manifesto.
+// CTA único para entrada na comunidade via WhatsApp.
 export const Navbar = ({ onOpenManifesto }: { onOpenManifesto?: () => void }) => {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === "/";
-  const { isAuthenticated, isLoading } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,7 +51,7 @@ export const Navbar = ({ onOpenManifesto }: { onOpenManifesto?: () => void }) =>
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
             <span
-              className={`text-2xl font-bold font-serif transition-colors duration-500 ${
+              className={`text-2xl font-bold font-poppins transition-colors duration-500 ${
                 scrolled ? "text-foreground" : "text-background"
               }`}
             >
@@ -78,29 +78,31 @@ export const Navbar = ({ onOpenManifesto }: { onOpenManifesto?: () => void }) =>
             ))}
           </div>
 
+          {/* Small Manifesto trigger if parent provides handler */}
+          {onOpenManifesto && (
+            <div className="hidden md:block ml-6">
+              <button
+                onClick={onOpenManifesto}
+                className={`text-sm font-medium underline ${scrolled ? 'text-foreground' : 'text-background'}`}
+              >
+                Assinar Manifesto
+              </button>
+            </div>
+          )}
+
           {/* Right area: desktop CTA vs mobile menu */}
           <div className="flex items-center">
-            {/* Desktop: keep CTA */}
+            {/* Desktop CTA único */}
             <div className="hidden md:block">
-              {isLoading ? null : (
-                isAuthenticated ? (
-                  <Link
-                    to="/assembleia"
-                    className={`font-medium transition-colors duration-500 hover:text-primary ${
-                      scrolled ? "text-foreground" : "text-background"
-                    }`}
-                  >
-                    Acessar QG
-                  </Link>
-                ) : (
-                  <Button
-                    onClick={() => onOpenManifesto && onOpenManifesto()}
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-glow transition-all duration-300 hover:scale-105"
-                  >
-                    Assine o Manifesto
-                  </Button>
-                )
-              )}
+              <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-glow transition-all duration-300 hover:scale-105">
+                <a
+                  href="https://wa.me/55XXXXXXXXXX" // TODO: substituir pelo número definitivo
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Entrar na Comunidade
+                </a>
+              </Button>
             </div>
 
             {/* Mobile: menu */}
@@ -128,17 +130,15 @@ export const Navbar = ({ onOpenManifesto }: { onOpenManifesto?: () => void }) =>
                   </div>
                   <Separator className="my-4" />
                   <div className="space-y-2">
-                    {isLoading ? null : (
-                      isAuthenticated ? (
-                        <SheetClose asChild>
-                          <Link to="/assembleia" className="block rounded-md px-3 py-2 text-base hover:bg-muted">
-                            Acessar QG
-                          </Link>
-                        </SheetClose>
-                      ) : (
-                        <Button className="w-full" onClick={() => onOpenManifesto && onOpenManifesto()}>Assine o Manifesto</Button>
-                      )
-                    )}
+                    <Button asChild className="w-full">
+                      <a
+                        href="https://wa.me/55XXXXXXXXXX" // TODO: substituir pelo número definitivo
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Entrar na Comunidade
+                      </a>
+                    </Button>
                   </div>
                 </SheetContent>
               </Sheet>

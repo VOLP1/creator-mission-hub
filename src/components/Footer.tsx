@@ -15,7 +15,7 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Logo & Newsletter */}
           <div className="space-y-6">
-            <h3 className="text-3xl font-bold font-serif">+Creator</h3>
+            <h3 className="text-3xl font-bold font-poppins">+Creator</h3>
             <p className="text-sm opacity-80">Jovens idealistas construindo um futuro com propósito.</p>
             <form onSubmit={handleNewsletterSubmit} className="space-y-3">
               <Input type="email" placeholder="Seu e-mail" className="bg-white/10 border-white/20 text-white placeholder:text-white/50" />
@@ -27,7 +27,7 @@ export const Footer = () => {
 
           {/* Navigation */}
           <div>
-            <h4 className="text-lg font-bold mb-4 font-serif">Navegação</h4>
+            <h4 className="text-lg font-bold mb-4 font-sans">Navegação</h4>
             <ul className="space-y-3">
               <li>
                 <Link to="/" className="opacity-80 hover:opacity-100 hover:text-primary transition-all">Home</Link>
@@ -46,7 +46,7 @@ export const Footer = () => {
 
           {/* Legal */}
           <div>
-            <h4 className="text-lg font-bold mb-4 font-serif">Legal</h4>
+            <h4 className="text-lg font-bold mb-4 font-sans">Legal</h4>
             <ul className="space-y-3">
               <li>
                 <a href="#" className="opacity-80 hover:opacity-100 hover:text-primary transition-all">Política de Privacidade</a>
@@ -65,7 +65,7 @@ export const Footer = () => {
 
           {/* Social */}
           <div>
-            <h4 className="text-lg font-bold mb-4 font-serif">Social</h4>
+            <h4 className="text-lg font-bold mb-4 font-sans">Social</h4>
             <div className="flex gap-4">
               <a
                 href="https://www.instagram.com/maiscreator/"
@@ -84,7 +84,7 @@ export const Footer = () => {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-white/10">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm opacity-60">© 2025 Movimento +Creator. Todos os direitos reservados.</p>
+            <p className="text-sm opacity-60">© 2025 Movimento <span className="font-poppins">+Creator</span>. Todos os direitos reservados.</p>
             <p className="text-sm opacity-60">Feito com ❤️ por jovens inconformados</p>
           </div>
         </div>

@@ -14,26 +14,19 @@ afterEach(() => {
 })
 
 describe('QuemSomos manifesto page', () => {
-  it('renderiza o título do manifesto e um CTA para assinar', () => {
-    const onOpenManifesto = vi.fn()
+  it('renderiza o título e CTAs atualizados para comunidade', () => {
     render(
       <MemoryRouter>
-        <QuemSomos onOpenManifesto={onOpenManifesto} />
+        <QuemSomos />
       </MemoryRouter>,
     )
 
-    // Headline
-    expect(
-      screen.getByText(/O Manifesto \+Creator/i)
-    ).toBeInTheDocument()
-
-  // CTA button (há mais de um na página; usamos o primeiro)
-  const ctas = screen.getAllByRole('button', { name: /Assinar o Manifesto/i })
-  expect(ctas.length).toBeGreaterThan(0)
-  const cta = ctas[0]
-
-  fireEvent.click(cta)
-    expect(onOpenManifesto).toHaveBeenCalledTimes(1)
+    expect(screen.getByText(/O Manifesto \+Creator/i)).toBeInTheDocument()
+  // Novo(s) CTA(s) para comunidade (podem existir mais de um)
+  const communityLinks = screen.getAllByRole('link', { name: /Entrar na Comunidade/i })
+  expect(communityLinks.length).toBeGreaterThan(0)
+    // Não deve mais existir botão de Assinar o Manifesto
+    expect(screen.queryByRole('button', { name: /Assinar o Manifesto/i })).not.toBeInTheDocument()
   })
 
   it('mostra partes do manifesto', () => {

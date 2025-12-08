@@ -60,6 +60,60 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+### Typography (mobile-first)
+
+To improve readability on phones and avoid overflow, use the centralized Heading component:
+
+- Component: `src/components/ui/heading.tsx`
+- Variants:
+	- `hero`: landing titles — text-3xl on mobile up to lg:text-7xl
+	- `section`: section titles — text-2xl on mobile up to lg:text-5xl
+	- `sub`: supporting titles — text-xl on mobile up to md:text-3xl
+	- `stat`: numeric/KPI — text-4xl on mobile up to lg:text-7xl
+
+Example:
+
+```tsx
+import { Heading } from "@/components/ui/heading";
+
+<Heading as="h2" variant="section" className="text-secondary-foreground">
+	Nossa Primeira Missão
+</Heading>
+```
+
+When animating, wrap Heading in a motion.div instead of using motion.h2.
+
+## Tipografia do Movimento
+
+- Fonte padrão (global): Montserrat
+- Fonte da marca e qualquer texto que contenha "+Creator": Poppins
+
+Como usar:
+
+- Todo o site já usa Montserrat por padrão.
+- Para aplicar Poppins nos pontos de marca, use a classe utilitária `font-poppins` (ex.: `<span className="font-poppins">+Creator</span>`).
+- Navbar e Footer já foram ajustados. Em páginas com textos que mencionam "+Creator", os casos principais foram atualizados; no manifesto, a renderização já envolve automaticamente esse termo com Poppins.
+
+## Paleta de Cores
+
+Primárias:
+
+- Acento principal: `#f7613a`
+- Background claro: `#eff0f1`
+- Texto/escuro (também usado como “alarm”): `#2d2e30`
+- Secondary (azul): `#384477`
+
+Secundárias:
+
+- Accent/support (cinza quente): `#65645E`
+- Muted/border: `#d3d9dc`
+- Beige de apoio: `#c0ad96`
+
+Implementação técnica:
+
+- As variáveis CSS em `src/index.css` foram alinhadas a essas cores (ex.: `--primary`, `--secondary`, `--accent`, `--background`, `--foreground`, etc.) e o Tailwind consome via `hsl(var(--...))`.
+- Gradientes principais usam `--primary` → `--secondary`.
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/539ecc54-d48d-4065-939c-2c1690198a75) and click on Share -> Publish.

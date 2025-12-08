@@ -103,6 +103,8 @@ app.post('/api/v1/missions', authMiddleware, async (req, res) => {
   }
 })
 
+// Note: Frontend is served separately in production (Coolify). No static serving here.
+
 export default app
 
 // Start HTTP server only outside of test runs
