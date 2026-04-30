@@ -1,7 +1,5 @@
 import express from 'express'
 import cors from 'cors'
-import path from 'path'
-import { fileURLToPath } from 'url'
 import { z } from 'zod'
 import jwt from 'jsonwebtoken'
 import pool from './db.js'
@@ -105,25 +103,12 @@ app.post('/api/v1/missions', authMiddleware, async (req, res) => {
   }
 })
 
-// --- Serve frontend static files in production ---
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-const clientPath = path.join(__dirname, 'client')
-
-app.use(express.static(clientPath))
-
-// SPA fallback: non-API GET requests serve index.html
-app.get('*', (req, res) => {
-  if (req.path.startsWith('/api')) {
-    return res.status(404).json({ message: 'Endpoint não encontrado' })
-  }
-  res.sendFile(path.join(clientPath, 'index.html'))
-})
+// Note: Frontend is served separately in production (Coolify). No static serving here.
 
 export default app
 
 // Start HTTP server only outside of test runs
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 4000
 
 if (!process.env.VITEST) {
   app.listen(PORT, () => {
