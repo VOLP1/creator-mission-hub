@@ -10,5 +10,8 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  build: {
+    outDir: 'dist/client',
+  },
   // Note: proxy removed. Frontend will use absolute API URLs from import.meta.env.VITE_API_BASE_URL
 })
